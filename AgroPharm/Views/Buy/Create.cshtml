@@ -1,0 +1,153 @@
+﻿@model AgroPharm.Models.BuyProductViewModel
+
+<div class="page-content-wrapper">
+	<div class="page-content">	
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="card card-box">
+					<div class="card-head">
+						<header>Закупка товара</header>						
+					</div>
+					<div class="card-body" id="bar-parent">
+						<form asp-controller="Buy" asp-action="Create" class="form-horizontal" method="post">
+							<div class="form-body">
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Наименование товара <span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<select class="form-control input-height" asp-for="Request.ProductNameID" asp-items="Model.Products" required>
+											<option value="">Выберите...</option>
+										</select>
+									</div>
+								</div>								
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Наименовании организации <span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<select class="form-control input-height" asp-for="Request.OrganizationNameID" asp-items="Model.Organizations" required>
+											<option value="">Выберите...</option>
+										</select>
+									</div>
+								</div>								
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Цена (TJS) 
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="priceTJS" asp-for="Request.BuyProductPrice" placeholder="Введите цену товара TJS" class="form-control input-height" step="0.01" min="0.01" required/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Цена (USD) 
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="priceUSD" asp-for="Request.BuyProductPriceUSD" placeholder="Введите цену товара в USD" class="form-control input-height" step="0.01" min="0.01" required/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Количество товара
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="quantity" asp-for="Request.BuyProductObem" placeholder="Введите количество" class="form-control input-height" min="1" required/>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Сумма (TJS)
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="sumTJS" asp-for="Request.BuyProductSumPrice" placeholder="Сумма TJS" class="form-control input-height" readonly />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Сумма (USD)
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="sumUSD" asp-for="Request.BuyProductSumPriceUSD" placeholder="Сумма USD" class="form-control input-height" readonly />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Комментарий
+									</label>
+									<div class="col-md-5">
+										<textarea asp-for="Request.BuyComment" placeholder="Коментарии к товару" class="form-control-textarea" rows="5"></textarea>
+									</div>
+								</div>
+								<div class="form-actions">
+									<div class="row">
+										<div class="offset-md-3 col-md-9">
+											<button asp-controller="Buy" asp-action="Create" class="btn btn-primary">Закупать</button>
+											<button type="button" class="btn btn-default" onclick="window.history.back();">Отмена</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const priceTJSInput = document.getElementById("priceTJS");
+		const priceUSDInput = document.getElementById("priceUSD");
+		const quantity = document.getElementById("quantity");
+		const totalTJSInput = document.getElementById("sumTJS");
+		const totalUSDInput = document.getElementById("sumUSD");
+
+		// Установите курс валюты (пример: 1 USD = 11 TJS)
+		const exchangeRate = 11;
+
+		function calculateSum() {
+			// Получить введенные значения
+			const priceTJS = parseFloat(priceTJSInput.value) || 0;
+			const priceUSD = parseFloat(priceUSDInput.value) || 0;
+			const BuyQuantity = parseFloat(quantity.value) || 0;
+
+			// Рассчитать суммы
+			const totalTJS = priceTJS*BuyQuantity;
+			const totalUSD = priceUSD*BuyQuantity;
+
+			// Отобразить результаты
+			totalTJSInput.value = totalTJS.toFixed(2);
+			totalUSDInput.value = totalUSD.toFixed(2);
+		}
+		function tjstousd(){
+			const priceTJS = parseFloat(priceTJSInput.value);
+
+			const totalUSD = priceTJS/exchangeRate;
+
+			priceUSDInput.value = totalUSD.toFixed(2);
+		}
+		function usdtotjs(){
+			const priceUSD = parseFloat(priceUSDInput.value);
+
+			const totalTJS = priceUSD*exchangeRate;
+
+			priceTJSInput.value = totalTJS.toFixed(2);
+		}
+
+		// Добавить обработчики событий
+		priceTJSInput.addEventListener("input", tjstousd);
+		priceUSDInput.addEventListener("input", usdtotjs);
+		priceTJSInput.addEventListener("input", calculateSum);
+		priceUSDInput.addEventListener("input", calculateSum);
+		quantity.addEventListener("input", calculateSum);
+
+	});
+</script>

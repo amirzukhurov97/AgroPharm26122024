@@ -1,0 +1,39 @@
+﻿@model Customer
+
+
+<div class="page-content-wrapper">
+	<div class="page-content" style="min-height:1539px">
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="card card-box">
+					<div class="card-head">
+						<header>Редактирование наименование покупателя</header>
+					</div>
+					<div class="card-body" id="bar-parent">
+						<form asp-controller="Customer" asp-action="Edit" class="form-horizontal" method="post">
+							<div class="form-body">
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Редактирование наименование покупателя
+										<span class="required" aria-required="true"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="text" name="customerName" value="@Model.customerName" placeholder="Введите наименование покупателя" class="form-control input-height" required>
+									</div>
+								</div>
+								<div class="form-actions">
+									<div class="row">
+										<div class="offset-md-5 col-md-7">
+											<button type="submit" class="btn btn-info"><i class="fa fa-pensil"></i>Изменить</button>
+											<a asp-controller="Customer" asp-action="Index" class="btn btn-default">Отмена</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

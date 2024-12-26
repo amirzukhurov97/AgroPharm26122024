@@ -1,0 +1,48 @@
+﻿@model AgroPharm.Models.BuyProductViewModel
+
+@{
+    ViewData["Title"] = "Удалить продукт";
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="card card-box">
+            <div class="card-head">
+                <header>Подтверждение удаления</header>
+            </div>
+            <div class="card-body text-center">
+                <h4 style="color:red">Вы уверены, что хотите удалить этот продукт?</h4>
+                <dl class="row">
+                    <dt class="col-sm-6 text-right">Наименование продукта: </dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.ProductName</dd>
+                    <dt class="col-sm-6 text-right">Название организации</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.OrganizationName</dd>
+                    <dt class="col-sm-6 text-right">Цена за единицу (TJS)</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductPrice</dd>
+                    <dt class="col-sm-6 text-right">Цена за единицу (USD)</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductPriceUSD</dd>
+                    <dt class="col-sm-6 text-right">Количество, шт</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductObem</dd>
+                    <dt class="col-sm-6 text-right">Общая сумма (TJS)</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductSumPrice</dd>
+                    <dt class="col-sm-6 text-right">Общая сумма (USD)</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductSumPriceUSD</dd>
+                    <dt class="col-sm-6 text-right">Дата и время</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductDate</dd>
+                    <dt class="col-sm-6 text-right">Комментарий</dt>
+                    <dd class="col-sm-6 text-left">@Model.Response.BuyComment</dd>
+                </dl>
+                <form method="post" asp-action="Delete">
+                    <!-- Скрытые поля для передачи модели -->
+                    <input type="hidden" asp-for="Response.Id" />
+                    <input type="hidden" asp-for="Response.ProductNameID" />
+                    <input type="hidden" asp-for="Response.BuyProductObem" />
+
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                    <a asp-action="All_BuyProducts" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
