@@ -17,7 +17,7 @@ namespace AgroPharm.Repositories
             try
             {
                 using var db = new MySqlConnection(_connectionString);
-                var sqlQuery = "INSERT INTO products (ProductName) VALUES (@ProductName);";
+                var sqlQuery = "INSERT INTO customers (CustomerName) VALUES (@CustomerName);";
                 var res = await db.ExecuteAsync(sqlQuery, customer);
                 return customer;
             }

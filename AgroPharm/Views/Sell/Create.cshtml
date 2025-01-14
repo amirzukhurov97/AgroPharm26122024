@@ -1,0 +1,109 @@
+﻿@model AgroPharm.Models.ViewModel
+
+<div class="page-content-wrapper">
+	<div class="page-content">
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="card">
+					<div class="card-head">
+						<header>Продажа товара</header>
+					</div>
+					<div class="card-body" id="bar-parent">
+
+						<form id="createProductForm" asp-controller="Sell" asp-action="Create" class="form-horizontal" method="post">
+							<div class="form-body">
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Наименование товара <span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<select class="form-control input-height" asp-for="SellRequest.ProductNameID" asp-items="Model.Products" required>
+											<option value="">Выберите...</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Наименовании организации <span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<select class="form-control input-height" asp-for="SellRequest.CustomerNameID" asp-items="Model.Customers" required>
+											<option value="">Выберите...</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Цена (TJS)
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="priceTJS" asp-for="SellRequest.SellProductPrice" placeholder="Введите цену товара TJS" class="form-control input-height" step="0.01" min="0.01" required />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Цена (USD)
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="priceUSD" asp-for="SellRequest.SellProductPriceUSD" placeholder="Введите цену товара в USD" class="form-control input-height" step="0.01" min="0.01" required />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Количество товара
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="quantity" asp-for="SellRequest.SellProductObem" placeholder="Введите количество" class="form-control input-height" min="1" required />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Сумма (TJS)
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="sumTJS" asp-for="SellRequest.SellProductSumPrice" placeholder="Сумма TJS" class="form-control input-height" readonly />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Сумма (USD)
+										<span class="required"> * </span>
+									</label>
+									<div class="col-md-5">
+										<input type="number" id="sumUSD" asp-for="SellRequest.SellProductSumPriceUSD" placeholder="Сумма USD" class="form-control input-height" readonly />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="control-label col-md-3">
+										Комментарий
+									</label>
+									<div class="col-md-5">
+										<textarea asp-for="SellRequest.SellComment" placeholder="Коментарии к товару" class="form-control-textarea" rows="5"></textarea>
+									</div>
+								</div>
+								<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+								<div class="form-actions">
+									<div class="row">
+										<div class="offset-md-3 col-md-9">
+											<button asp-controller="Sell" asp-action="Create" class="btn btn-primary">Продать</button>
+											<button type="button" class="btn btn-default" onclick="window.history.back();">Отмена</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+<script src="@Url.Content("~/js/сalculatePrice.js")"></script>
+<script src="@Url.Content("~/js/createResponse.js")"></script>

@@ -1,0 +1,120 @@
+﻿@model IEnumerable<AgroPharm.Models.Response.ReturnOutResponse>
+
+@{
+    int count = 1;
+    ViewData["Title"] = "BuyProduct Page";
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-line">
+                    <div class="tab-content">
+                        <div class="tab-pane active fontawesome-demo" id="tab1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-head">
+                                            <header>Возвраты организацию</header>
+                                            <div class="tools">
+                                                <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                                                <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                                                <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body ">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                    <div class="btn-group">
+                                                        <a asp-controller="ReturnOut" asp-action="Create" id="addRow" class="btn btn-info">
+                                                            Возврат <i class="fa fa-plus"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-6">
+                                                    <div class="btn-group pull-right">
+                                                        <a class="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">
+                                                            Инструменты
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a asp-controller="Home" asp-action="PrintReport">
+                                                                    <i class="fa fa-print"></i> Print
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a asp-controller="Home" asp-action="PrintReport">
+                                                                    <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;">
+                                                                    <i class="fa fa-file-excel-o"></i> Export to Excel
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable">
+                                                <table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle" id="example4">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="text-center">№</th>
+                                                            <th scope="col" class="text-center">ID товара</th>
+                                                            <th scope="col" class="text-center">Наименование продукта</th>
+                                                            <th scope="col" class="text-center">Название организации</th>
+                                                            <th scope="col" class="text-center">Цена за единицу (TJS)</th>
+                                                            <th scope="col" class="text-center">Цена за единицу ($)</th>
+                                                            <th scope="col" class="text-center">Количество</th>
+                                                            <th scope="col" class="text-center">Общая сумма (TJS)</th>
+                                                            <th scope="col" class="text-center">Общая сумма ($)</th>
+                                                            <th scope="col" class="text-center">Дата покупки</th>
+                                                            <th scope="col" class="text-center">Комментарий</th>
+                                                            <th scope="col" class="text-center">Действия</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            <tr class="odd gradeX">
+                                                                <td class="text-center">@count</td>
+                                                                <td class="text-center">@item.Id</td>
+                                                                <td class="text-center">@item.ProductName</td>
+                                                                <td class="text-center">@item.OrganizationName</td>
+                                                                <td class="text-center">@item.ReturnOutProductPrice?.ToString("N2")</td>
+                                                                <td class="text-center">@item.ReturnOutProductPriceUSD?.ToString("N2")</td>
+                                                                <td class="text-center">@item.ReturnOutProductObem?.ToString("N2")</td>
+                                                                <td class="text-center">@item.ReturnOutSumProductPrice?.ToString("N2")</td>
+                                                                <td class="text-center">@item.ReturnOutSumProductPriceUSD?.ToString("N2")</td>
+                                                                <td class="text-center">@item.ReturnOutProductDate?.ToString("dd.MM.yyyy")</td>
+                                                                <td class="text-center">@item.ReturnOutComment</td>
+                                                                <td class="text-center">
+                                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-xs">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
+                                                                    <a onclick='deleteItem(@Html.Raw(Json.Serialize(item)))' class="btn btn-danger btn-xs" title="Удалить">
+                                                                        <i class="fa fa-trash-o "></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            count++;
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/js/deleteRecord.js")"></script>
+

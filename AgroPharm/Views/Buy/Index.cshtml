@@ -6,19 +6,6 @@
 
 <div class="page-content-wrapper">
     <div class="page-content">
-        <div class="page-bar">
-            <div class="page-title-breadcrumb">
-                <div class=" pull-left">
-                    <div class="page-title">Все купленные товары</div>
-                </div>
-                <ol class="breadcrumb page-breadcrumb pull-right">
-                    <li>
-                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" asp-controller="Home" asp-action="Index">Главняя</a>&nbsp;<i class="fa fa-angle-right"></i>
-                    </li>
-                    <li class="active">Все купленные товары</li>
-                </ol>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="tabbable-line">
@@ -26,7 +13,7 @@
                         <div class="tab-pane active fontawesome-demo" id="tab1">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card card-box">
+                                    <div class="card">
                                         <div class="card-head">
                                             <header>Все купленные товары</header>
                                             <div class="tools">
@@ -107,7 +94,7 @@
                                                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-xs">
                                                                         <i class="fa fa-pencil"></i>
                                                                     </a>
-                                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-xs" title="Удалить">
+                                                                    <a onclick='deleteItem(@Html.Raw(Json.Serialize(item)))' class="btn btn-danger btn-xs" title="Удалить">
                                                                         <i class="fa fa-trash-o "></i>
                                                                     </a>
                                                                 </td>
@@ -128,7 +115,5 @@
         </div>
     </div>
 </div>
+<script src="@Url.Content("~/js/deleteRecord.js")"></script>
 
-@section Scripts
-{
-}

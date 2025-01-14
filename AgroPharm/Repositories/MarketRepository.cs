@@ -2,6 +2,7 @@
 using AgroPharm.Models.Request;
 using AgroPharm.Models.Response;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System.Data;
 
@@ -13,44 +14,61 @@ namespace AgroPharm.Repositories
         public MarketRepository(string configuration) {
             _connectionString = configuration;
         }
-        public async Task<IEnumerable<Market>> GetMarketList()
+        public IEnumerable<Market> GetMarketList()
         {
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
-                var getQuery = @"SELECT market.`ID`, Products.`ProductName`, Market.`obemProducts` FROM market JOIN products ON market.`ProductNameID` = products.`ID`;";
-                var resultQuery = await connection.QueryAsync<Market>(getQuery);
+                var getQuery = @"SELECT market.`ID`, market.`ProductNameID`,  Products.`ProductName`, Market.`obemProducts` FROM market JOIN products ON market.`ProductNameID` = products.`ID`;";
+                var resultQuery = connection.Query<Market>(getQuery);
                 return resultQuery;
+            }
+            catch(MySqlException e)
+            {
+                throw;
             }
             catch (Exception ex)
             {
-                // Optionally log the exception here
                 throw;
             }
         }
-        public void IncomeProduct(MarketRequest marketRequest)
+        public string IncomeProduct(MarketRequest marketRequest)
         {
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
                 var sql = "INSERT INTO market (ProductNameID, obemProducts) VALUES (@ProductNameID, @ObemProducts) ON DUPLICATE KEY UPDATE obemProducts = obemProducts + VALUES (obemProducts);";
                 connection.Execute(sql, marketRequest);
+                return "OK";
             }
             catch (Exception ex)
-            { }
+            {
+                return $"Ошибка при обновлении таблицы Market: {ex.Message}";
+            }
         }
 
-        public void OutcomeProduct(MarketRequest marketRequest) 
+        public string OutcomeProduct(MarketRequest marketRequest) 
         {
-
             try
             {
                 using var connection = new MySqlConnection(_connectionString);
-                var sql = "INSERT INTO market (ProductNameID, obemProducts) VALUES (@ProductNameID, @ObemProducts) ON DUPLICATE KEY UPDATE obemProducts = obemProducts - VALUES (obemProducts);";
-                connection.Execute(sql, marketRequest);
+                var getQuantity = "SELECT obemProducts FROM market WHERE ProductNameID = @ProductNameID;";
+                var res = connection.Query<Market>(getQuantity, new { marketRequest.ProductNameID }).FirstOrDefault();
+                if (res.ObemProducts>=marketRequest.obemProducts) 
+                {
+                    var sql = "INSERT INTO market (ProductNameID, obemProducts) VALUES (@ProductNameID, @ObemProducts) ON DUPLICATE KEY UPDATE obemProducts = obemProducts - VALUES (obemProducts);";
+                    connection.Execute(sql, marketRequest);
+                    return "OK";
+                }
+                else
+                {
+                    return $"Внимание: Недостаточное количество товара на складе.\n Количество такого товара на складе = {res.ObemProducts}";
+                }
             }
             catch (Exception ex)
-            { }
+            {
+                return $"Ошибка при обновлении таблицы Market: {ex.Message}";
+            }
         } 
     }
 }

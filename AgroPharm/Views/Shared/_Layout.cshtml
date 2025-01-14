@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta name="description" content="Responsive Admin Pages" />
+	
+
     <title>AgroPharm | Market for ESG</title>
 	
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css" />
     <!-- icons -->
-	<link rel="stylesheet" type="text/css" href="../fonts/simple-line-icons/simple-line-icons.min.css" />
+	<link rel="stylesheet" type="text/css" href="@Url.Content("~/fonts/simple-line-icons/simple-line-icons.min.css")" />
     <link href="@Url.Content("~/fonts/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/fonts/material-design-icons/material-icon.css")" rel="stylesheet" type="text/css" />
     <!--bootstrap -->
@@ -30,17 +32,24 @@
     <link href="@Url.Content("~/assets/css/responsive.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/assets/css/theme/light/theme-color.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/assets/css/pages/formlayout.css")" rel="stylesheet" type="text/css" />
+    
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link href="@Url.Content("~/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
+	<link href="@Url.Content("~/lib/sweetalert2/dist/sweetalert2.css")" rel="stylesheet" type="text/css">
 
-	
+	<style>
+		.navbar-collapse {
+
+		}
+	</style>
 	<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
 
 	
+
 </head>
 <br />
 <br />
-<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-indigo">
+<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-indigo" style="overflow-y: hidden;">
     <header>   
 		<div class="page-wrapper">
 			<!-- start header -->
@@ -74,130 +83,116 @@
 					<!-- start header menu -->
 					<div class="top-menu">
 						<ul class="nav navbar-nav pull-right">
+							<li><a><i class="fa fa-clock-o"></i><span id="DateLabel"></span>    <span id="TimeLabel" class="main-lbl"></span></a></li>
 							<li><a href="javascript:;" class="fullscreen-btn"><i class="fa fa-arrows-alt"></i></a></li>	
 						</ul>
 					</div>
 				</div>
 			</div>
 			
-			<!-- end header -->			
-        <!-- start sidebar menu -->
- 			<div class="sidebar-container">
- 				<div class="sidemenu-container navbar-collapse collapse fixed-menu">
-	                <div id="remove-scroll">
-	                    <ul class="sidemenu  page-header-fixed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
-	                        <li class="sidebar-toggler-wrapper hide">
-	                            <div class="sidebar-toggler">
-	                                <span></span>
-	                            </div>
-	                        </li>
-	                        <li class="nav-item">
-	                            <a href="#" class="nav-link nav-toggle">
-									<i class="material-icons">dashboard</i>
-	                                <span class="title">Dashboard</span>
-                                	<span class="selected"></span>
-                                	<span class="arrow"></span>
-	                            </a>	                            
-	                        </li>
-							<li class="nav-item">
-								<a href="#" class="nav-link nav-toggle">
-									<i class="material-icons">add</i>
-	                            <span class="title">Добавить</span><span class="arrow"></span></a>
-	                            <ul class="sub-menu">
-	                                <li class="nav-item">
-										<a asp-controller="Product" asp-action="Index" class="nav-link">
-											<i class="material-icons">library_add</i>
-											<span class="title">Наименование товара</span>
-	                                    </a>
-	                                </li>	                                
-	                                <li class="nav-item">
-										<a asp-controller="Organization" asp-action="Index" class="nav-link">
-											<i class="material-icons">
-												<i class="material-icons">location_city</i>
-											</i>
-											<span class="title">Наименование организации</span>
-	                                    </a>
-	                                </li> 
-									<li class="nav-item">
-										<a asp-controller="Customer" asp-action="Index" class="nav-link">
-											<i class="material-icons">person_add</i>
-											<span class="title">Наименование покупателя</span>
-	                                    </a>
-	                                </li> 
-	                            </ul>								
-	                        </li>
-							<li class="nav-item">
-								<a class="nav-link nav-toggle" asp-controller="Buy" asp-action="All_BuyProducts">
-									<i class="material-icons">add_shopping_cart</i>
-	                            <span class="title">Закупка</span><span class="arrow"></span></a>	                       
-	                        </li><li class="nav-item">
-								<a href="#" class="nav-link nav-toggle">
-									<i class="material-icons">shopping_cart</i>
-	                            <span class="title">Продажа</span><span class="arrow"></span></a>
-	                        </li><li class="nav-item">
-								<a href="#" class="nav-link nav-toggle">
-									<i class="material-icons">assignment_return</i>
-	                            <span class="title">Возврат</span><span class="arrow"></span></a>
-	                            <ul class="sub-menu">	                                	                                
-	                                <li class="nav-item">
-										<a href="add_student_bootstrap.html" class="nav-link ">
-											<i class="material-icons">assignment_returned</i>
-											<span class="title">От пакупателя</span>
-	                                    </a>
-	                                </li> 
-									<li class="nav-item">
-										<a href="add_student_bootstrap.html" class="nav-link ">
-											<i class="material-icons">cached</i>
-											<span class="title">Организацию</span>
-	                                    </a>
-	                                </li> 
-	                            </ul>
-	                        </li>
+			<!-- end header -->
+            <div class="sidebar-container">
+                <div class="sidemenu-container navbar-collapse collapse fixed-menu" style="height: 100vh;">
+                    <div id="remove-scroll">
+                        <ul class="sidemenu page-header-fixed"
+                            data-keep-expanded="false"
+                            data-auto-scroll="true"
+                            data-slide-speed="200"
+                            style="padding-top: 20px;">
+                            <li class="sidebar-toggler-wrapper hide">
+                                <div class="sidebar-toggler">
+                                    <span></span>
+                                </div>
+                            </li>
                             <li class="nav-item">
-								<a href="#" class="nav-link nav-toggle">
-									<i class="fa fa-dollar"></i>
-	                            <span class="title">Курс валют</span><span class="arrow"></span></a>	                            
-	                        </li>
+                                <a href="#" class="nav-link nav-toggle">
+                                    <i class="material-icons">dashboard</i>
+                                    <span class="title">Dashboard</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
                             <li class="nav-item">
-								<a href="#" class="nav-link nav-toggle">
-                                    <i class="fa fa-exclamation-circle"></i>
-	                            <span class="title">О нас</span><span class="arrow"></span></a>	                            
-	                        </li>
-	                        
-	                    </ul>
-	                </div>
+                                <a href="#" class="nav-link nav-toggle">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="title">Добавить</span><span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item">
+                                        <a asp-controller="Product" asp-action="Index" class="nav-link">
+                                            <i class="material-icons">library_add</i>
+                                            <span class="title">Наименование товара</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Organization" asp-action="Index" class="nav-link">
+                                            <i class="material-icons">location_city</i>
+                                            <span class="title">Наименование организации</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="Customer" asp-action="Index" class="nav-link">
+                                            <i class="material-icons">person_add</i>
+                                            <span class="title">Наименование покупателя</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-toggle" asp-controller="Buy" asp-action="Index">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span class="title">Закупка</span><span class="arrow"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Sell" asp-action="Index" class="nav-link nav-toggle">
+                                    <i class="material-icons">shopping_cart</i>
+                                    <span class="title">Продажа</span><span class="arrow"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link nav-toggle">
+                                    <i class="fa fa-reply"></i>
+                                    <span class="title">Возврат</span><span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item">
+                                        <a asp-controller="ReturnIn" asp-action="Index" class="nav-link">
+                                            <i class="icon-user"></i>
+                                            <span class="title">От пакупателя</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-controller="ReturnOut" asp-action="Index" class="nav-link">
+                                            <i class="material-icons">location_city</i>
+                                            <span class="title">Организацию</span>
+                                        </a>
+                                    </li>                                    
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://10.10.2.75/CurrencyRates.aspx" class="nav-link nav-toggle">
+                                    <i class="fa fa-dollar"></i>
+                                    <span class="title">Курс валют</span><span class="arrow"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-		</div>
-            <!-- end sidebar menu --> 
 
+        </div>
     </header>
 
     <div class="container-fluid" style="margin-top: 20px;">
-        <!-- Основной контент будет сдвинут вниз на высоту навбара -->
-        <main role="main" class="pb-3">
             @RenderBody()
-        </main>
 
     </div>
-
-    <!-- start footer -->
-    <div class="page-footer">
-        <div class="page-footer-inner">
-            2024 &copy; AgroPharm Theme By
-            <a href="mailto:zukhurovamir96@gmail.com" target="_top" class="makerCss"></a>
-        </div>
-        <div class="scroll-to-top">
-            <i class="icon-arrow-up"></i>
-        </div>
-    </div>
-    <!-- end footer -->
-
+	
 
     @await RenderSectionAsync("Scripts", required: false)
 
 
-	<script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
 	<script src="@Url.Content("~/assets/plugins/jquery/jquery.min.js")"></script>
 	<script src="@Url.Content("~/assets/plugins/popper/popper.js")"></script>
 	<script src="@Url.Content("~/assets/plugins/jquery-blockui/jquery.blockui.min.js")"></script>
@@ -223,9 +218,21 @@
 	<script src="@Url.Content("~/assets/js/pages/table/table_data.js")"></script>
 
 	<script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+	<script src="@Url.Content("~/lib/sweetalert2/dist/sweetalert2.js")"></script>
 
 	<script src="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js")" charset="UTF-8"></script>
 	<script src="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker-init.js")" charset="UTF-8"></script>
 
+    <script src="@Url.Content("~/assets/js/pages/extra-pages/pages.js")"></script>
+	
+	<script>
+			if (document.getElementById) onload = function () {
+			setInterval(function() {
+				var dt = new Date();
+				document.getElementById('DateLabel').innerText = +("0" + dt.getDate()).slice(-2) + "/" + ("0" + (dt.getMonth() + 1)).slice(-2) + "/" + dt.getFullYear();
+				document.getElementById('TimeLabel').innerText = +("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2);
+			}, 50);
+		}
+	</script>
 </body>
 </html>

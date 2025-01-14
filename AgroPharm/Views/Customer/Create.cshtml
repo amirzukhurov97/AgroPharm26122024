@@ -1,15 +1,14 @@
-﻿@model Customer
-
+﻿
 <div class="page-content-wrapper">
 	<div class="page-content" style="min-height:1539px">
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
-				<div class="card card-box">
+				<div class="card">
 					<div class="card-head">
 						<header>Наименование покупателя</header>
 					</div>
 					<div class="card-body" id="bar-parent">
-						<form asp-controller="Customer" asp-action="Create" class="form-horizontal" method="post">
+						<form id="createProductForm" asp-controller="Customer" asp-action="Create" class="form-horizontal" method="post">
 							<div class="form-body">
 								<div class="form-group row">
 									<label class="control-label col-md-3">
@@ -17,9 +16,10 @@
 										<span class="required" aria-required="true"> * </span>
 									</label>
 									<div class="col-md-5">
-										<input type="text" name="customerName" placeholder="Введите наименование покупателя" class="form-control input-height" required>
+										<input type="text" name="customerName" placeholder="Введите наименование покупателя" class="form-control input-height" autocomplete="off" required>
 									</div>
 								</div>
+								<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
 								<div class="form-actions">
 									<div class="row">
 										<div class="offset-md-5 col-md-7">
@@ -36,3 +36,4 @@
 		</div>
 	</div>
 </div>
+<script src="@Url.Content("~/js/createResponse.js")"></script>

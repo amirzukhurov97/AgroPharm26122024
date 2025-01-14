@@ -37,7 +37,11 @@ namespace AgroPharm.Repositories
             {
                 IEnumerable<BuyProductResponse> buyProducts;
                 using var db = new MySqlConnection(_connectingString);                
-                var sqlQuery = "SELECT BuyProducts.ID, BuyProducts.ProductNameID, Products.ProductName, BuyProducts.OrganizationNameID, Organizations.OrganizationName,BuyProducts.BuyProductPrice,BuyProducts.BuyProductPriceUSD, BuyProducts.BuyProductObem, BuyProducts.BuyProductSumPrice, BuyProducts.BuyProductSumPriceUSD,BuyProducts.BuyProductDate, BuyProducts.BuyComment FROM BuyProducts JOIN Products ON BuyProducts.ProductNameID = Products.ID JOIN Organizations ON BuyProducts.OrganizationNameID = Organizations.ID ORDER BY ID DESC";
+                var sqlQuery = "SELECT org.`OrganizationName`,p.`ProductName`, buy.* " +
+                    "FROM BuyProducts AS buy " +
+                    "LEFT JOIN Products AS p ON buy.`ProductNameID` = p.`ID` " +
+                    "LEFT JOIN Organizations AS org ON buy.`OrganizationNameID` = org.`ID` " +
+                    "ORDER BY ID DESC";
                 buyProducts = db.Query<BuyProductResponse>(sqlQuery).ToList();                
                 return buyProducts;
             }
@@ -55,13 +59,26 @@ namespace AgroPharm.Repositories
 
                 var sqlQuery = "DELETE FROM buyProducts WHERE ID = @id;";
                 db.Execute(sqlQuery, new { id });
-
-                return $"Закупка с ID {id} удалён!";
+                return "OK";
             }
             catch (Exception ex)
             {
+                return ex.Message; 
+            }
+        }
 
-                throw new Exception(ex.Message);
+        public BuyProductRequest Edit(BuyProductRequest buyProduct)
+        {
+            try
+            {
+                using var db = new MySqlConnection(_connectingString);
+                var sqlQuery = "UPDATE buyproducts SET ProductNameID=@ProductNameID, OrganizationNameID = @OrganizationNameID, BuyProductPrice = @BuyProductPrice, BuyProductPriceUSD = @BuyProductPriceUSD, BuyProductObem = @BuyProductObem, BuyProductSumPrice = @BuyProductSumPrice, BuyProductSumPriceUSD = @BuyProductSumPriceUSD, BuyProductDate = @BuyProductDate, BuyComment = @BuyComment WHERE ID = @Id;";
+                db.Execute(sqlQuery, buyProduct);
+                return buyProduct;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }

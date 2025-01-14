@@ -1,15 +1,17 @@
-﻿@model AgroPharm.Models.BuyProductViewModel
-
+﻿@model AgroPharm.Models.ViewModel
+@{
+	double? oldQuantity = Model.tempQuantity;
+}
 <div class="page-content-wrapper">
 	<div class="page-content">	
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
-				<div class="card card-box">
+				<div class="card">
 					<div class="card-head">
 						<header>Редактирование товара</header>						
 					</div>
 					<div class="card-body" id="bar-parent">
-						<form asp-controller="Buy" asp-action="Edit" class="form-horizontal" method="post">
+						<form id="editProductForm" asp-controller="Buy" asp-action="Edit" class="form-horizontal" method="post">
 							<div class="form-body">
 								<div class="form-group row">
 									<label class="control-label col-md-3">
@@ -83,11 +85,14 @@
 									<div class="col-md-5">
 										<textarea asp-for="Request.BuyComment" placeholder="Коментарий к товару" class="form-control-textarea" rows="5"></textarea>
 									</div>
-								</div>
+								</div>								
+								<input type="hidden" asp-for="tempQuantity">
+								<input type="hidden" asp-for="Request.Id">	
+								<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
 								<div class="form-actions">
 									<div class="row">
 										<div class="offset-md-3 col-md-9">
-											<button asp-controller="Buy" asp-action="Create" class="btn btn-primary">Сохранить изменения</button>
+											<button asp-controller="Buy" asp-action="Edit" class="btn btn-primary">Сохранить изменения</button>
 											<button type="button" class="btn btn-default" onclick="window.history.back();">Отмена</button>
 										</div>
 									</div>
@@ -101,53 +106,5 @@
 	</div>
 </div>
 
-
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
-		const priceTJSInput = document.getElementById("priceTJS");
-		const priceUSDInput = document.getElementById("priceUSD");
-		const quantity = document.getElementById("quantity");
-		const totalTJSInput = document.getElementById("sumTJS");
-		const totalUSDInput = document.getElementById("sumUSD");
-
-		// Установите курс валюты (пример: 1 USD = 11 TJS)
-		const exchangeRate = 11;
-
-		function calculateSum() {
-			// Получить введенные значения
-			const priceTJS = parseFloat(priceTJSInput.value) || 0;
-			const priceUSD = parseFloat(priceUSDInput.value) || 0;
-			const BuyQuantity = parseFloat(quantity.value) || 0;
-
-			// Рассчитать суммы
-			const totalTJS = priceTJS*BuyQuantity;
-			const totalUSD = priceUSD*BuyQuantity;
-
-			// Отобразить результаты
-			totalTJSInput.value = totalTJS.toFixed(2);
-			totalUSDInput.value = totalUSD.toFixed(2);
-		}
-		function tjstousd(){
-			const priceTJS = parseFloat(priceTJSInput.value);
-
-			const totalUSD = priceTJS/exchangeRate;
-
-			priceUSDInput.value = totalUSD.toFixed(2);
-		}
-		function usdtotjs(){
-			const priceUSD = parseFloat(priceUSDInput.value);
-
-			const totalTJS = priceUSD*exchangeRate;
-
-			priceTJSInput.value = totalTJS.toFixed(2);
-		}
-
-		// Добавить обработчики событий
-		priceTJSInput.addEventListener("input", tjstousd);
-		priceUSDInput.addEventListener("input", usdtotjs);
-		priceTJSInput.addEventListener("input", calculateSum);
-		priceUSDInput.addEventListener("input", calculateSum);
-		quantity.addEventListener("input", calculateSum);
-
-	});
-</script>
+<script src="@Url.Content("~/js/editRecord.js")"></script>
+<script src="@Url.Content("~/js/сalculatePrice.js")"></script>

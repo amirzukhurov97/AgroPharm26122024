@@ -5,12 +5,12 @@
 	<div class="page-content" style="min-height:1539px">
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
-				<div class="card card-box">
+				<div class="card">
 					<div class="card-head">
 						<header>Редактирование наименование организации</header>
 					</div>
 					<div class="card-body" id="bar-parent">
-						<form asp-controller="Organization" asp-action="Edit" class="form-horizontal" method="post">
+						<form id="editProductForm" asp-controller="Organization" asp-action="Edit" class="form-horizontal" method="post">
 							<div class="form-body">
 								<div class="form-group row">
 									<label class="control-label col-md-3">
@@ -21,6 +21,7 @@
 										<input type="text" name="organizationName" value="@Model.OrganizationName" placeholder="Введите наименование организации" class="form-control input-height" required>
 									</div>
 								</div>
+								<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
 								<div class="form-actions">
 									<div class="row">
 										<div class="offset-md-5 col-md-7">
@@ -37,3 +38,5 @@
 		</div>
 	</div>
 </div>
+
+<script src="@Url.Content("~/js/editRecord.js")"></script>

@@ -1,4 +1,5 @@
-﻿using AgroPharm.Models;
+﻿using AgroPharm.Interfaces;
+using AgroPharm.Models;
 using AgroPharm.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,16 +7,16 @@ namespace AgroPharm.Controllers
 {
     public class OrganizationController : Controller
     {
-        private OrganizationRepo _porduct;
-        public OrganizationController(OrganizationRepo product)
+        private OrganizationRepo _organization;
+        public OrganizationController(OrganizationRepo organization)
         {
-            _porduct = product;
+            _organization = organization;
         }
         public IActionResult Index()
         {
             try
             {
-                var result = _porduct.GetOrganizations();
+                var result = _organization.GetOrganizations();
                 return View(result);
             }
             catch (Exception ex)
@@ -25,8 +26,20 @@ namespace AgroPharm.Controllers
         }
         public IActionResult Delete(int id)
         {
-            _porduct.DeleteOrganization(id);
-            return RedirectToAction("Index");
+            try
+            {
+                var org = _organization.GetOrganizations().FirstOrDefault(p => p.Id == id);
+                if (org == null)
+                {
+                    return Json(new { success = false, message = "Наименование организации не найдена." });
+                }
+                _organization.DeleteOrganization(id);
+                return Json(new { success = true, message = "Наименование организации успешно удалёна!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Ошибка: {ex.Message}" });
+            }
         }
         public ActionResult Create()
         {
@@ -37,31 +50,31 @@ namespace AgroPharm.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (string.IsNullOrEmpty(organization.OrganizationName))
                 {
-                    var checkName = _porduct.CheckOrganziationName(organization.OrganizationName);
-                    if (checkName)
-                    {
-                        return RedirectToAction("Warning");
-                    }
-                    _porduct.CreateOrganization(organization);
-                    return RedirectToAction("Index");
+                    return Json(new { success = false, message = "Наименование организации не указано." });
                 }
-                return View(organization);
-            }
-            catch (HttpIOException)
-            {
-                return RedirectToAction("ServerError");
+
+                bool checkName = _organization.CheckOrganziationName(organization.OrganizationName);
+                if (!checkName)
+                {
+                    _organization.CreateOrganization(organization);
+                    return Json(new { success = true, message = "Наименование организация успешно добавлено!" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Наименование организации уже существует." });
+                }
             }
             catch (Exception ex)
             {
-                return View(ex.Message);
+                return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
             }
         }
 
         public ActionResult Edit(int id)
         {
-            var result = _porduct.GetOrganizations().FirstOrDefault(p => p.Id == id);
+            var result = _organization.GetOrganizations().FirstOrDefault(p => p.Id == id);
 
             return View("Edit", result);
         }
@@ -71,25 +84,24 @@ namespace AgroPharm.Controllers
         {
             try
             {
-                var checkName = _porduct.CheckOrganziationName(organization.OrganizationName);
-                if (checkName)
+                if (string.IsNullOrEmpty(organization.OrganizationName))
                 {
-                    return RedirectToAction("Warning", "Product");
+                    return Json(new { success = false, message = "Наименование организации не указано." });
                 }
-                if (!ModelState.IsValid)
+                var checkName = _organization.CheckOrganziationName(organization.OrganizationName);
+                if (!checkName)
                 {
-                    return View(organization);
+                    _organization.UpdateOrganization(organization);
+                    return Json(new { success = true, message = "Наименование организации успешно изменено!" });
                 }
-                _porduct.UpdateOrganization(organization);
-                return RedirectToAction("Index");
+                else
+                {
+                    return Json(new { success = false, message = "Наименование организации уже существует." });
+                }
             }
-            catch (HttpIOException)
+            catch (Exception ex)
             {
-                return RedirectToAction("ServerError");
-            }
-            catch (Exception)
-            {
-                throw;
+                return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
             }
 
         }

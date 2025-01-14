@@ -14,7 +14,7 @@
                         <div class="tab-pane active fontawesome-demo" id="tab1">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card card-box">
+                                    <div class="card">
                                         <div class="card-head">
                                             <header>Наименование организации</header>
                                             <div class="tools">
@@ -79,7 +79,8 @@
                                                                        title="Изменить">
                                                                         <i class="fa fa-pencil"></i>
                                                                     </a>
-                                                                    <button class="btn btn-danger btn-xs" title="Удалить" onclick="deleteItem(@item.Id)">
+                                                                    <button class="btn btn-danger btn-xs" title="Удалить"
+                                                                            onclick='deleteItem(@Html.Raw(Json.Serialize(item)))'>
                                                                         <i class="fa fa-trash-o"></i>
                                                                     </button>
                                                                 </td>
@@ -100,48 +101,4 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function() {
-            $(".btnEditProduct").click(function(){
-                 let productName=$(this).attr('data-input-value');
-                 $("#EditProductInputValue").val(productName);
-            });
-        });
-
-
-    </script>
-
-    <script>
-        var tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-            new bootstrap.Tooltip(tooltipTriggerEl)
-        });
-    </script>
-
-    <script>
-
-
-                function deleteItem(id) {
-            if (confirm("Вы уверены, что хотите удалить этот элемент?")) {
-                window.location.href = `@Url.Action("Delete", "Organization")?id=${id}`;
-            }
-        }
-
-        //         $('#addProductNameModal').on('show.bs.modal', function (event) {
-        //   var button = $(event.relatedTarget) // Button that triggered the modal
-        //   var recipient = button.data('whatever') // Extract info from data-* attributes
-        //   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        //   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        //   var modal = $(this)
-        //   modal.find('.modal-title').text('New message to ' + recipient)
-        //   modal.find('.modal-body input').val(recipient)
-        // })
-    </script>
-
-
-
-}
+<script src="@Url.Content("~/js/deleteRecord.js")"></script>

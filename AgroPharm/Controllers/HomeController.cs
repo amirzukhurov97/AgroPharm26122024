@@ -3,6 +3,7 @@ using AgroPharm.Interfaces;
 using AgroPharm.Models;
 using AgroPharm.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace AgroPharm.Controllers
 {
@@ -17,22 +18,41 @@ namespace AgroPharm.Controllers
             _market = market;   
         }
 
-        public async  Task<IActionResult> Index()
+        //public async  Task<IActionResult> Index()
+        //{
+        //    try
+        //    {
+        //        var res = _market.GetMarketList();                
+        //        return View(res);              
+        //    }
+        //    catch(MySqlException me)
+        //    {
+        //        return Json(new { success = false, message = $"Произошла ошибка при работе с БД: {me.Message}" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
+        //        return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
+        //    }
+            
+        //}
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var res = await _market.GetMarketList();
-                return View(res);
+                var markets = _market.GetMarketList();
+                return View(markets);
+                 
             }
-            catch (HttpRequestException)
+            catch (MySqlException me)
             {
-                return RedirectToAction("ServerError", "Product");
+                return RedirectToAction("ServerError");
+                //return Json(new { success = false, message = $"Ошибка при работе с БД: {me.Message}" });
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Product");
+                return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
             }
-            
         }
 
         public IActionResult Privacy()
@@ -40,6 +60,12 @@ namespace AgroPharm.Controllers
             return View();
         }
         public IActionResult PrintReport()
+        {
+            return View();
+        }
+
+        [Route("/Shared/ServerError")]
+        public IActionResult ServerError()
         {
             return View();
         }

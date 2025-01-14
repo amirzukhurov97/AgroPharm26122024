@@ -22,61 +22,58 @@ namespace AgroPharm.Controllers
             }
             catch (Exception ex)
             {
-                return View(ex.Message);
+                return Json(new { success = false, message = $"Ошибка: {ex.Message}" });
             }            
         }
+        
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             try
             {
-                var success = _porduct.DeleteProduct(id);
-                if (success !=null)
+                var product = _porduct.GetProducts().FirstOrDefault(p=>p.Id==id);
+                if (product == null)
                 {
-                    TempData["DeleteMessage"] = $"{success}";
-                    TempData["DeleteSuccess"] = true;
+                    return Json(new { success = false, message = "Наименование товара не найдена." });
                 }
-                else
-                {
-                    TempData["DeleteMessage"] = $"{success}";
-                    TempData["DeleteSuccess"] = false;
-                }
+                _porduct.DeleteProduct(id);
+                return Json(new { success = true, message = "Наименование товара успешно удалёна!" });
             }
             catch (Exception ex)
             {
-                TempData["DeleteMessage"] = "Произошла ошибка: " + ex.Message;
-                TempData["DeleteSuccess"] = false;
+                return Json(new { success = false, message = $"Ошибка: {ex.Message}" });
             }
-
-            return RedirectToAction("Index");
         }
+
         public ActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Create(Product product) 
+        public IActionResult Create(Product product)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (string.IsNullOrEmpty(product.ProductName))
                 {
-                    var checkName = _porduct.CheckProductName(product.ProductName);
-                    if (checkName)
-                    {
-                        return RedirectToAction("Warning");
-                    }
-                    _porduct.CreateProduct(product);
-                    return RedirectToAction("Index");
+                    return Json(new { success = false, message = "Наименование товара не указано." });
                 }
-                return View(product);
-            }
-            catch (HttpIOException)
-            {
-                return RedirectToAction("ServerError");
+
+                bool checkName = _porduct.CheckProductName(product.ProductName);
+                if (!checkName)
+                {
+                    _porduct.CreateProduct(product);
+                    return Json(new { success = true, message = "Наименование товара успешно добавлено!" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Наименование товара уже существует." });
+                }
             }
             catch (Exception ex)
             {
-                return View(ex.Message);
+                return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
             }
         }
 
@@ -92,38 +89,25 @@ namespace AgroPharm.Controllers
         {
             try
             {
-                var checkName = _porduct.CheckProductName(product.ProductName);
-                if (checkName)
+                if (string.IsNullOrEmpty(product.ProductName))
                 {
-                    return RedirectToAction("Warning");
+                    return Json(new { success = false, message = "Наименование товара не указано." });
                 }
-                if (!ModelState.IsValid)
+                var checkName = _porduct.CheckProductName(product.ProductName);                
+                if (!checkName)
                 {
-                    return View(product);
+                    _porduct.UpdateProduct(product);
+                    return Json(new { success = true, message = "Наименование товара успешно изменено!" });
                 }
-                _porduct.UpdateProduct(product);
-                return RedirectToAction("Index");
+                else
+                {
+                    return Json(new { success = false, message = "Наименование товара уже существует." });
+                }
             }
-            catch(HttpIOException){
-                return RedirectToAction("ServerError");
-            }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
             }
-            
         }
-        [Route("/Shared/Warning")]
-        public ActionResult Warning()
-        {
-            return View();
-        }
-        [Route("/Shared/Error")]
-        public ActionResult Error()
-        {
-            return View();
-        }
-
-
     }
 }

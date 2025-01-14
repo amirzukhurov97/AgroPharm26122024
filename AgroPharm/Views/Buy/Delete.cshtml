@@ -1,4 +1,4 @@
-﻿@model AgroPharm.Models.BuyProductViewModel
+﻿@model AgroPharm.Models.ViewModel
 
 @{
     ViewData["Title"] = "Удалить продукт";
@@ -6,7 +6,7 @@
 
 <div class="page-content-wrapper">
     <div class="page-content">
-        <div class="card card-box">
+        <div class="card">
             <div class="card-head">
                 <header>Подтверждение удаления</header>
             </div>
@@ -32,17 +32,17 @@
                     <dt class="col-sm-6 text-right">Комментарий</dt>
                     <dd class="col-sm-6 text-left">@Model.Response.BuyComment</dd>
                 </dl>
-                <form method="post" asp-action="Delete">
+                <form>
                     <!-- Скрытые поля для передачи модели -->
                     <input type="hidden" asp-for="Response.Id" />
                     <input type="hidden" asp-for="Response.ProductNameID" />
                     <input type="hidden" asp-for="Response.BuyProductObem" />
 
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                    <a asp-action="All_BuyProducts" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-danger" onclick='deleteItem(@Html.Raw(Json.Serialize(Model.Response)))'>Удалить</button>
+                    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+<script src="@Url.Content("~/js/deleteRecord.js")"></script>
