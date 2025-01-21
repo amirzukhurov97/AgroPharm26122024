@@ -19,7 +19,7 @@ namespace AgroPharm.Repositories
             try
             {
                 using var db = new MySqlConnection(_connectingString);
-                var sqlQuery = "INSERT INTO buyproducts (ProductNameID, OrganizationNameID, BuyProductPrice, BuyProductPriceUSD, BuyProductObem, BuyProductSumPrice, BuyProductSumPriceUSD, BuyProductDate, BuyComment) VALUES (@ProductNameID, @OrganizationNameID, @BuyProductPrice, @BuyProductPriceUSD, @BuyProductObem, @BuyProductSumPrice, @BuyProductSumPriceUSD, @BuyProductDate, @BuyComment);";
+                var sqlQuery = "INSERT INTO returncustomerproducts (ProductNameID, CustomerNameID, ReturnInProductPrice, ReturnInProductPriceUSD, ReturnInProductObem, ReturnInSumProductPrice, ReturnInSumProductPriceUSD, ReturnInProductDate, ReturnInComment) VALUES (@ProductNameID, @CustomerNameID, @ReturnInProductPrice, @ReturnInProductPriceUSD, @ReturnInProductObem, @ReturnInProductSumPrice, @ReturnInProductSumPriceUSD, @ReturnInProductDate, @ReturnInComment);";
                 db.Execute(sqlQuery, returnIn);
                 return returnIn;
             }
@@ -36,7 +36,7 @@ namespace AgroPharm.Repositories
             {
                 using var db = new MySqlConnection(_connectingString);
 
-                var sqlQuery = "DELETE FROM returnIn WHERE ID = @id;";
+                var sqlQuery = "DELETE FROM returncustomerproducts WHERE ID = @id;";
                 db.Execute(sqlQuery, new { id });
                 return "OK";
             }
@@ -51,7 +51,7 @@ namespace AgroPharm.Repositories
             try
             {
                 using var db = new MySqlConnection(_connectingString);
-                var sqlQuery = "UPDATE buyproducts SET ProductNameID=@ProductNameID, OrganizationNameID = @OrganizationNameID, BuyProductPrice = @BuyProductPrice, BuyProductPriceUSD = @BuyProductPriceUSD, BuyProductObem = @BuyProductObem, BuyProductSumPrice = @BuyProductSumPrice, BuyProductSumPriceUSD = @BuyProductSumPriceUSD, BuyProductDate = @BuyProductDate, BuyComment = @BuyComment WHERE ID = @Id;";
+                var sqlQuery = "UPDATE returncustomerproducts SET ProductNameID=@ProductNameID, CustomerNameID = @CustomerNameID, ReturnInProductPrice = @ReturnInProductPrice, ReturnInProductPriceUSD = @ReturnInProductPriceUSD, ReturnInProductObem = @ReturnInProductObem, ReturnInSumProductPrice = @ReturnInProductSumPrice, ReturnInSumProductPriceUSD = @ReturnInProductSumPriceUSD, ReturnInProductDate = @ReturnInProductDate, ReturnInComment = @ReturnInComment WHERE ID = @Id;";
                 db.Execute(sqlQuery, returnIn);
                 return returnIn;
             }
@@ -78,6 +78,21 @@ namespace AgroPharm.Repositories
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public ReturnInResponse GetReturnInTotal()
+        {
+            try
+            {
+                using var db = new MySqlConnection(_connectingString);
+                var sqlQuery = "SELECT SUM(ret.`ReturnInSumProductPrice`) AS ReturnInSumProductPrice, SUM(ret.`ReturnInSumProductPriceUSD`) AS ReturnInSumProductPriceUSD FROM returncustomerproducts ret;";
+                ReturnInResponse? returnInProducts = db.QuerySingleOrDefault<ReturnInResponse>(sqlQuery);
+                return returnInProducts;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }

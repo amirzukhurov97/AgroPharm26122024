@@ -77,12 +77,13 @@
                                                                     <a asp-controller="Customer" asp-action="Edit" asp-route-id="@item.Id"
                                                                        class="btn btn-warning btn-xs"
                                                                        title="Изменить">
+                                                                        Редактировать
                                                                         <i class="fa fa-pencil"></i>
                                                                     </a>
-                                                                    <button class="btn btn-danger btn-xs" title="Удалить"
+                                                                    @* <button class="btn btn-danger btn-xs" title="Удалить"
                                                                             onclick='deleteItem(@Html.Raw(Json.Serialize(item)))'>
                                                                         <i class="fa fa-trash-o"></i>
-                                                                    </button>
+                                                                    </button> *@
 
                                                                 </td>
                                                             </tr>

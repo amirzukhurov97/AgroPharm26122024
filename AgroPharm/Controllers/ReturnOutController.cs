@@ -174,7 +174,7 @@ namespace AgroPharm.Controllers
                 {
                     return Json(new { success = false, message = "Наименование товара не указано." });
                 }
-                if (ReturnOutProduct.SellRequest.CustomerNameID == 0)
+                if (ReturnOutProduct.ReturnOutRequest.OrganizationNameID == 0)
                 {
                     return Json(new { success = false, message = "Наименование организации не указано." });
                 }
@@ -186,12 +186,12 @@ namespace AgroPharm.Controllers
                 {
                     return Json(new { success = false, message = "Количество товара не указано." });
                 }
-                var producrMarket = _marketRepository.GetMarketList().FirstOrDefault(p => p.ProductNameID == ReturnOutProduct.SellRequest.ProductNameID);
+                var producrMarket = _marketRepository.GetMarketList().FirstOrDefault(p => p.ProductNameID == ReturnOutProduct.ReturnOutRequest.ProductNameID);
                 if (ReturnOutProduct.tempQuantity > ReturnOutProduct.ReturnOutRequest.ReturnOutProductObem)
                 {
                     var market = new MarketRequest
                     {
-                        ProductNameID = ReturnOutProduct.SellRequest.ProductNameID,
+                        ProductNameID = ReturnOutProduct.ReturnOutRequest.ProductNameID,
                         obemProducts = ReturnOutProduct.tempQuantity - ReturnOutProduct.ReturnOutRequest.ReturnOutProductObem
                     };
                     _marketRepository.IncomeProduct(market);
@@ -200,7 +200,7 @@ namespace AgroPharm.Controllers
                 {
                     var market = new MarketRequest
                     {
-                        ProductNameID = ReturnOutProduct.SellRequest.ProductNameID,
+                        ProductNameID = ReturnOutProduct.ReturnOutRequest.ProductNameID,
                         obemProducts = ReturnOutProduct.ReturnOutRequest.ReturnOutProductObem - ReturnOutProduct.tempQuantity
                     };
                     var resMarket = _marketRepository.OutcomeProduct(market);
@@ -208,7 +208,6 @@ namespace AgroPharm.Controllers
                     {
                         return Json(new { success = false, message = $"Произошла ошибка: {resMarket}" });
                     }
-
                 }
 
                 var sellProducts = new ReturnOutRequest
@@ -242,7 +241,7 @@ namespace AgroPharm.Controllers
                 var product = _returnOut.GetReturnOutProducts().FirstOrDefault(p => p.Id == id); // Используйте ваш сервис или репозиторий
                 if (product == null)
                 {
-                    return Json(new { success = false, message = $"Этот возврат была удалена" });
+                    return Json(new { success = false, message = $"Этот возврат был удален" });
                 }
                 var market = new MarketRequest
                 {

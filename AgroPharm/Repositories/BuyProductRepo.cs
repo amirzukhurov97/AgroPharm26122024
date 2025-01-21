@@ -1,5 +1,6 @@
 ﻿using AgroPharm.Infrastructure;
 using AgroPharm.Interfaces;
+using AgroPharm.Models.Buy;
 using AgroPharm.Models.Request;
 using AgroPharm.Models.Response;
 using Dapper;
@@ -75,6 +76,20 @@ namespace AgroPharm.Repositories
                 var sqlQuery = "UPDATE buyproducts SET ProductNameID=@ProductNameID, OrganizationNameID = @OrganizationNameID, BuyProductPrice = @BuyProductPrice, BuyProductPriceUSD = @BuyProductPriceUSD, BuyProductObem = @BuyProductObem, BuyProductSumPrice = @BuyProductSumPrice, BuyProductSumPriceUSD = @BuyProductSumPriceUSD, BuyProductDate = @BuyProductDate, BuyComment = @BuyComment WHERE ID = @Id;";
                 db.Execute(sqlQuery, buyProduct);
                 return buyProduct;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public BuyProductResponse GetBuyProductTotal()
+        {
+            try
+            {
+                using var db = new MySqlConnection(_connectingString);
+                var sqlQuery = "SELECT SUM(buy.`BuyProductSumPrice`) AS BuyProductSumPrice, SUM(buy.`BuyProductSumPriceUSD`) AS BuyProductSumPriceUSD FROM buyproducts buy;";
+                BuyProductResponse? buyProducts = db.QuerySingleOrDefault<BuyProductResponse>(sqlQuery);
+                return buyProducts;
             }
             catch (Exception ex)
             {

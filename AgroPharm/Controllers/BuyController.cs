@@ -16,20 +16,23 @@ namespace AgroPharm.Controllers
         private readonly ProductRepo _product;
         private readonly OrganizationRepo _organization;
         private readonly MarketRepository _marketRepository;
+        private readonly CurrencyRepo _currencyRepo;
 
-        public BuyController(BuyProductRepo buyProduct, ProductRepo product, OrganizationRepo organization, MarketRepository marketRepository)
+        public BuyController(BuyProductRepo buyProduct, ProductRepo product, OrganizationRepo organization, MarketRepository marketRepository, CurrencyRepo currencyRepo)
         {
             _buyProduct = buyProduct;
             _product = product;
             _organization = organization;
             _marketRepository = marketRepository;
+            _currencyRepo = currencyRepo;
         }
         // GET: BuyController
         public ActionResult Index()
         {
             try
             {
-                return View(_buyProduct.GetBuyProducts());
+                var buyProducts = _buyProduct.GetBuyProducts();
+                return View(buyProducts);
             }
             catch (Exception ex)
             {
@@ -52,11 +55,17 @@ namespace AgroPharm.Controllers
                 Text = o.OrganizationName
             }).ToList();
 
+            
+            var currency = Convert.ToDecimal(_currencyRepo.GetLastCurrency());
+
+            Console.WriteLine($"Текущий курс доллара 1 usd = {currency}");
+
             var model = new ViewModel
             {
                 Products = products,
                 Organizations = organizations,
-                Request = new BuyProductRequest()
+                CurrencyNow = currency,
+                BuyProductRequest = new BuyProductRequest()
             };
 
             return View(model);
@@ -68,39 +77,39 @@ namespace AgroPharm.Controllers
         {
             try
             {
-                if (buyProduct.Request.ProductNameID == 0)
+                if (buyProduct.BuyProductRequest.ProductNameID == 0)
                 {
                     return Json(new { success = false, message = "Наименование товара не указано." });
                 }
-                if (buyProduct.Request.OrganizationNameID == 0)
+                if (buyProduct.BuyProductRequest.OrganizationNameID == 0)
                 {
                     return Json(new { success = false, message = "Наименование организации не указано." });
                 }
-                if (buyProduct.Request.BuyProductPrice == 0 || buyProduct.Request.BuyProductPriceUSD == 0)
+                if (buyProduct.BuyProductRequest.BuyProductPrice == 0 || buyProduct.BuyProductRequest.BuyProductPriceUSD == 0)
                 {
                     return Json(new { success = false, message = "Цена товара не указана." });
                 }
-                if (buyProduct.Request.BuyProductObem == 0)
+                if (buyProduct.BuyProductRequest.BuyProductObem == 0)
                 {
                     return Json(new { success = false, message = "Количество товара не указано." });
                 }
                 // Сохранение данных в базу
                 var buyProducts = new BuyProductRequest
                 {
-                    ProductNameID = buyProduct.Request.ProductNameID,
-                    OrganizationNameID = buyProduct.Request.OrganizationNameID,
-                    BuyProductPrice = buyProduct.Request.BuyProductPrice,
-                    BuyProductPriceUSD = buyProduct.Request.BuyProductPriceUSD,
-                    BuyProductObem = buyProduct.Request.BuyProductObem,
-                    BuyProductSumPrice = buyProduct.Request.BuyProductSumPrice,
-                    BuyProductSumPriceUSD = buyProduct.Request.BuyProductSumPriceUSD,
-                    BuyProductDate = buyProduct.Request.BuyProductDate,
-                    BuyComment = buyProduct.Request.BuyComment
+                    ProductNameID = buyProduct.BuyProductRequest.ProductNameID,
+                    OrganizationNameID = buyProduct.BuyProductRequest.OrganizationNameID,
+                    BuyProductPrice = buyProduct.BuyProductRequest.BuyProductPrice,
+                    BuyProductPriceUSD = buyProduct.BuyProductRequest.BuyProductPriceUSD,
+                    BuyProductObem = buyProduct.BuyProductRequest.BuyProductObem,
+                    BuyProductSumPrice = buyProduct.BuyProductRequest.BuyProductSumPrice,
+                    BuyProductSumPriceUSD = buyProduct.BuyProductRequest.BuyProductSumPriceUSD,
+                    BuyProductDate = buyProduct.BuyProductRequest.BuyProductDate,
+                    BuyComment = buyProduct.BuyProductRequest.BuyComment
                 };
                 var market = new MarketRequest
                 {
-                    ProductNameID = buyProduct.Request.ProductNameID,
-                    obemProducts = buyProduct.Request.BuyProductObem
+                    ProductNameID = buyProduct.BuyProductRequest.ProductNameID,
+                    obemProducts = buyProduct.BuyProductRequest.BuyProductObem
                 };
                 _buyProduct.Create(buyProducts);
                 _marketRepository.IncomeProduct(market);
@@ -126,6 +135,7 @@ namespace AgroPharm.Controllers
                 Value = o.Id.ToString(),
                 Text = o.OrganizationName
             }).ToList();
+            var currency = Convert.ToDecimal(_currencyRepo.GetLastCurrency());
 
             var itemsRecord = _buyProduct.GetBuyProducts().FirstOrDefault(b => b.Id == id);
             ViewModel? model = null;
@@ -136,7 +146,7 @@ namespace AgroPharm.Controllers
                 {
                     Products = products,
                     Organizations = organizations,
-                    Request = new BuyProductRequest()
+                    BuyProductRequest = new BuyProductRequest()
                     {
                         Id = id,
                         ProductNameID = itemsRecord?.ProductNameID ?? 0,
@@ -148,8 +158,8 @@ namespace AgroPharm.Controllers
                         BuyProductSumPriceUSD = itemsRecord?.BuyProductSumPriceUSD ?? 0,
                         BuyComment = itemsRecord?.BuyComment
                     },
-                    Response = itemsRecord,
-
+                    BuyProductResponse = itemsRecord,
+                    CurrencyNow = currency,
                     tempQuantity = itemsRecord.BuyProductObem
                 };
             }
@@ -162,29 +172,29 @@ namespace AgroPharm.Controllers
         {
             try
             {
-                if (buyProduct.Request.ProductNameID == 0)
+                if (buyProduct.BuyProductRequest.ProductNameID == 0)
                 {
                     return Json(new { success = false, message = "Наименование товара не указано." });
                 }
-                if (buyProduct.Request.OrganizationNameID == 0)
+                if (buyProduct.BuyProductRequest.OrganizationNameID == 0)
                 {
                     return Json(new { success = false, message = "Наименование организации не указано." });
                 }
-                if (buyProduct.Request.BuyProductPrice == 0 || buyProduct.Request.BuyProductPriceUSD == 0)
+                if (buyProduct.BuyProductRequest.BuyProductPrice == 0 || buyProduct.BuyProductRequest.BuyProductPriceUSD == 0)
                 {
                     return Json(new { success = false, message = "Цена товара не указана." });
                 }
-                if (buyProduct.Request.BuyProductObem == 0)
+                if (buyProduct.BuyProductRequest.BuyProductObem == 0)
                 {
                     return Json(new { success = false, message = "Количество товара не указано." });
                 }
-                var producrMarket = _marketRepository.GetMarketList().FirstOrDefault(p => p.ProductNameID == buyProduct.Request.ProductNameID);
-                if (buyProduct.tempQuantity > buyProduct.Request.BuyProductObem)
+                var producrMarket = _marketRepository.GetMarketList().FirstOrDefault(p => p.ProductNameID == buyProduct.BuyProductRequest.ProductNameID);
+                if (buyProduct.tempQuantity > buyProduct.BuyProductRequest.BuyProductObem)
                 {
                     var market = new MarketRequest
                     {
-                        ProductNameID = buyProduct.Request.ProductNameID,
-                        obemProducts = buyProduct.tempQuantity - buyProduct.Request.BuyProductObem
+                        ProductNameID = buyProduct.BuyProductRequest.ProductNameID,
+                        obemProducts = buyProduct.tempQuantity - buyProduct.BuyProductRequest.BuyProductObem
                     };
                     var resMarket = _marketRepository.OutcomeProduct(market);
                     if(resMarket != "OK")
@@ -193,12 +203,12 @@ namespace AgroPharm.Controllers
                     }
                     Console.WriteLine("От товара вычитана количество");
                 }
-                if (buyProduct.tempQuantity < buyProduct.Request.BuyProductObem)
+                if (buyProduct.tempQuantity < buyProduct.BuyProductRequest.BuyProductObem)
                 {
                     var market = new MarketRequest
                     {
-                        ProductNameID = buyProduct.Request.ProductNameID,
-                        obemProducts = buyProduct.Request.BuyProductObem - buyProduct.tempQuantity
+                        ProductNameID = buyProduct.BuyProductRequest.ProductNameID,
+                        obemProducts = buyProduct.BuyProductRequest.BuyProductObem - buyProduct.tempQuantity
                     };
                     _marketRepository.IncomeProduct(market);
                     Console.WriteLine("К товару прибалена количество");
@@ -206,16 +216,16 @@ namespace AgroPharm.Controllers
 
                 var buyProducts = new BuyProductRequest
                 {
-                    Id = buyProduct.Request.Id,
-                    ProductNameID = buyProduct.Request.ProductNameID,
-                    OrganizationNameID = buyProduct.Request.OrganizationNameID,
-                    BuyProductPrice = buyProduct.Request.BuyProductPrice,
-                    BuyProductPriceUSD = buyProduct.Request.BuyProductPriceUSD,
-                    BuyProductObem = buyProduct.Request.BuyProductObem,
-                    BuyProductSumPrice = buyProduct.Request.BuyProductSumPrice,
-                    BuyProductSumPriceUSD = buyProduct.Request.BuyProductSumPriceUSD,
-                    BuyProductDate = buyProduct.Request.BuyProductDate,
-                    BuyComment = buyProduct.Request.BuyComment
+                    Id = buyProduct.BuyProductRequest.Id,
+                    ProductNameID = buyProduct.BuyProductRequest.ProductNameID,
+                    OrganizationNameID = buyProduct.BuyProductRequest.OrganizationNameID,
+                    BuyProductPrice = buyProduct.BuyProductRequest.BuyProductPrice,
+                    BuyProductPriceUSD = buyProduct.BuyProductRequest.BuyProductPriceUSD,
+                    BuyProductObem = buyProduct.BuyProductRequest.BuyProductObem,
+                    BuyProductSumPrice = buyProduct.BuyProductRequest.BuyProductSumPrice,
+                    BuyProductSumPriceUSD = buyProduct.BuyProductRequest.BuyProductSumPriceUSD,
+                    BuyProductDate = buyProduct.BuyProductRequest.BuyProductDate,
+                    BuyComment = buyProduct.BuyProductRequest.BuyComment
                 };
                 _buyProduct.Edit(buyProducts);
                 return Json(new { success = true, message = "Закупка успешно изменена!" });
@@ -256,11 +266,13 @@ namespace AgroPharm.Controllers
                 }
             }
             catch (Exception ex)
-            {
-                {
-                    return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
-                }
+            {               
+                return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });                
             }
+        }
+        public IActionResult Report()
+        {
+            return View();
         }
     }
 }

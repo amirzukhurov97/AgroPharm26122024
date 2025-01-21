@@ -4627,14 +4627,15 @@ ul.activity-list .activity-desk h5 a {
 					[16. TABLE ]
 						
 *****************************************************************/
-
 .table-scrollable {
-    width: 100%;
+    max-height: 800px; /* Adjust height as needed */
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     border: 1px solid #e7ecf1;
-    margin: 10px 0!important
+    margin: 10px 0 !important;
+    display: block; /* Ensure the div wraps properly */
 }
+
 .DTS .table-scrollable,
 .table-scrollable.table-scrollable-borderless,
 .table-scrollable>.table-bordered {

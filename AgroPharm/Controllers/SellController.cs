@@ -243,7 +243,7 @@ namespace AgroPharm.Controllers
                     ProductNameID = product.ProductNameID,
                     obemProducts = product.SellProductObem
                 };
-                var resMarket = _marketRepository.OutcomeProduct(market);
+                var resMarket = _marketRepository.IncomeProduct(market);
                 if (resMarket == "OK")
                 {
                     _sellProduct.Delete(product.Id);

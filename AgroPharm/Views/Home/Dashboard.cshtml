@@ -1,0 +1,228 @@
+﻿@model AgroPharm.Models.ViewModel
+
+<!-- start page content -->
+<div class="page-content-wrapper">
+	<div class="page-content">
+		<div class="page-bar">
+			<div class="page-title-breadcrumb">
+				<div class=" pull-left">
+					<div class="page-title">Dashboard</div>
+				</div>
+			</div>
+		</div>
+		<!-- start widget -->
+		<div class="state-overview">
+			<div class="row">
+				<div class="col-xl-3 col-md-6 col-12">
+					<div class="info-box bg-b-green">
+						<span class="info-box-icon push-bottom"><i class="fa fa-shopping-cart"></i></span>
+						<div class="info-box-content">
+							<span class="info-box-text title-dashboard" >Сумма закупок</span>
+							<span class="info-box-number">@Model.BuyProductResponse.BuyProductSumPrice TJS</span><br />
+							<span class="info-box-number">@Model.BuyProductResponse.BuyProductSumPriceUSD USD</span>							
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-xl-3 col-md-6 col-12">
+					<div class="info-box bg-b-yellow">
+						<span class="info-box-icon push-bottom"><i class="fa fa-shopping-cart"></i></span>
+						<div class="info-box-content">
+							<span class="info-box-text title-dashboard">Сумма продаж</span>
+							<span class="info-box-number">@Model.SellResponse.SellProductSumPrice TJS</span><br />
+							<span class="info-box-number">@Model.SellResponse.SellProductSumPriceUSD USD</span>							
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-xl-3 col-md-6 col-12">
+					<div class="info-box bg-b-blue">
+						<span class="info-box-icon push-bottom"><i class="fa fa-bank"></i></span>
+						<div class="info-box-content">
+							<span class="info-box-text title-dashboard">Сумма возврат организацию</span>
+							<span class="info-box-number">@Model.ReturnInResponse.ReturnInSumProductPrice TJS</span><br />
+							<span class="info-box-number">@Model.ReturnInResponse.ReturnInSumProductPriceUSD USD</span>
+							
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-xl-3 col-md-6 col-12">
+					<div class="info-box bg-b-pink">
+						<span class="info-box-icon push-bottom"><i class="material-icons">person</i></span>
+						<div class="info-box-content">
+							<span class="info-box-text title-dashboard">Сумма возврат от пукупателя</span>
+							<span class="info-box-number">@Model.ReturnOutResponse.ReturnOutSumProductPrice TJS</span><br />
+							<span class="info-box-number">@Model.ReturnOutResponse.ReturnOutSumProductPriceUSD USD</span>
+							
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+			</div>
+		</div>
+		<!-- end widget -->
+		<!-- chart start -->
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="card">
+					<div class="card-head">
+						<header>График закупок</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="canvas1"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-head">
+						<header>TOP - 10</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="chartjs_pie"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Chart end --><!-- chart start -->
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="card">
+					<div class="card-head">
+						<header>График продаж</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="canvas1"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-head">
+						<header>TOP - 10</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="chartjs_pie"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Chart end --><!-- chart start -->
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="card">
+					<div class="card-head">
+						<header>График возврат организацию</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="canvas1"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-head">
+						<header>TOP - 10</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="chartjs_pie"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Chart end --><!-- chart start -->
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="card">
+					<div class="card-head">
+						<header>График возврат от покупателя</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="canvas1"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="card">
+					<div class="card-head">
+						<header>TOP - 10</header>
+						<div class="tools">
+							<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+							<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+							<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+						</div>
+					</div>
+					<div class="card-body no-padding height-9" style="display: none;">
+						<div class="row">
+							<canvas id="chartjs_pie"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Chart end -->
+	</div>
+</div>
+
+<!-- chart js -->
+<script src="@Url.Content("~/assets/plugins/chart-js/Chart.bundle.js")"></script>
+<script src="@Url.Content("~/assets/plugins/chart-js/utils.js")"></script>
+<script src="@Url.Content("~/assets/js/pages/chart/chartjs/home-data.js")"></script>

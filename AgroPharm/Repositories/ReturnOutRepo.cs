@@ -49,7 +49,7 @@ namespace AgroPharm.Repositories
             try
             {
                 using var db = new MySqlConnection(_connectingString);
-                var sqlQuery = "UPDATE returnorganizationproducts SET ProductNameID=@ProductNameID, OrganizationNameID = @OrganizationNameID, ReturnOutProductPrice = @ReturnOutProductPrice, ReturnOutProductPriceUSD = @ReturnOutProductPriceUSD, ReturnOutProductObem = @ReturnOutProductObem, ReturnOutProductSumPrice = @ReturnOutProductSumPrice, ReturnOutProductSumPriceUSD = @ReturnOutProductSumPriceUSD, ReturnOutProductDate = @ReturnOutProductDate, ReturnOutComment = @ReturnOutComment WHERE ID = @Id;";
+                var sqlQuery = "UPDATE returnorganizationproducts SET ProductNameID=@ProductNameID, OrganizationNameID = @OrganizationNameID, ReturnOutProductPrice = @ReturnOutProductPrice, ReturnOutProductPriceUSD = @ReturnOutProductPriceUSD, ReturnOutProductObem = @ReturnOutProductObem, ReturnOutSumProductPrice = @ReturnOutProductSumPrice, ReturnOutSumProductPriceUSD = @ReturnOutProductSumPriceUSD, ReturnOutProductDate = @ReturnOutProductDate, ReturnOutComment = @ReturnOutComment WHERE ID = @Id;";
                 db.Execute(sqlQuery, returnOut);
                 return returnOut;
             }
@@ -76,6 +76,21 @@ namespace AgroPharm.Repositories
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public ReturnOutResponse GetReturnOutTotal()
+        {
+            try
+            {
+                using var db = new MySqlConnection(_connectingString);
+                var sqlQuery = "SELECT SUM(ret.`ReturnOutSumProductPrice`) AS ReturnOutSumProductPrice, SUM(ret.`ReturnOutSumProductPriceUSD`) AS ReturnOutSumProductPriceUSD FROM returnorganizationproducts ret;";
+                ReturnOutResponse? returnOutProducts = db.QuerySingleOrDefault<ReturnOutResponse>(sqlQuery);
+                return returnOutProducts;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }

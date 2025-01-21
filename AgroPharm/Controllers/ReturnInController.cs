@@ -46,7 +46,7 @@ namespace AgroPharm.Controllers
                 Text = p.ProductName
             }).ToList();
 
-            var organizations = _customer.GetCustomers().Select(o => new SelectListItem
+            var customers = _customer.GetCustomers().Select(o => new SelectListItem
             {
                 Value = o.Id.ToString(),
                 Text = o.customerName
@@ -55,7 +55,7 @@ namespace AgroPharm.Controllers
             var model = new ViewModel
             {
                 Products = products,
-                Organizations = organizations,
+                Customers = customers,
                 ReturnInRequest = new ReturnInRequest()
             };
             return View(model);
@@ -103,7 +103,7 @@ namespace AgroPharm.Controllers
                 };
                 _returnIn.Create(returnInproducts);
                 _marketRepository.IncomeProduct(market);
-                return Json(new { success = true, message = "Товар успешно куплен!" });
+                return Json(new { success = true, message = "Товар успешно возврашён в склад!" });
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace AgroPharm.Controllers
                 Text = p.ProductName
             }).ToList();
 
-            var organizations = _customer.GetCustomers().Select(o => new SelectListItem
+            var customers = _customer.GetCustomers().Select(o => new SelectListItem
             {
                 Value = o.Id.ToString(),
                 Text = o.customerName
@@ -134,7 +134,7 @@ namespace AgroPharm.Controllers
                 model = new ViewModel
                 {
                     Products = products,
-                    Organizations = organizations,
+                    Customers = customers,
                     ReturnInRequest = new ReturnInRequest()
                     {
                         Id = id,
@@ -176,7 +176,7 @@ namespace AgroPharm.Controllers
                 {
                     return Json(new { success = false, message = "Количество товара не указано." });
                 }
-                var producrMarket = _marketRepository.GetMarketList().FirstOrDefault(p => p.ProductNameID == returnIn.Request.ProductNameID);
+                var producrMarket = _marketRepository.GetMarketList().FirstOrDefault(p => p.ProductNameID == returnIn.ReturnInRequest.ProductNameID);
                 if (returnIn.tempQuantity > returnIn.ReturnInRequest.ReturnInProductObem)
                 {
                     var market = new MarketRequest
@@ -216,7 +216,7 @@ namespace AgroPharm.Controllers
                     ReturnInComment = returnIn.ReturnInRequest.ReturnInComment
                 };
                 _returnIn.Edit(buyProducts);
-                return Json(new { success = true, message = "Закупка успешно изменена!" });
+                return Json(new { success = true, message = "Возврат от покупателя успешно изменена!" });
             }
             catch (Exception ex)
             {
@@ -232,7 +232,7 @@ namespace AgroPharm.Controllers
                 var product = _returnIn.GetReturnInProducts().FirstOrDefault(p => p.Id == id); // Используйте ваш сервис или репозиторий
                 if (product == null)
                 {
-                    return Json(new { success = false, message = $"Эта закупка была удалена" });
+                    return Json(new { success = false, message = $"Этот возврат товара от покупателя была удалена" });
                 }
 
                 var market = new MarketRequest
@@ -244,7 +244,7 @@ namespace AgroPharm.Controllers
                 if (resMarket == "OK")
                 {
                     _returnIn.Delete(product.Id);
-                    return Json(new { success = true, message = "Закупка успешно удалена!" });
+                    return Json(new { success = true, message = "Возврат товара от покупателя успешно удалена!" });
                 }
                 else
                 {

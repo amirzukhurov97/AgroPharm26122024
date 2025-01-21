@@ -14,31 +14,31 @@
                 <h4 style="color:red">Вы уверены, что хотите удалить этот продукт?</h4>
                 <dl class="row">
                     <dt class="col-sm-6 text-right">Наименование продукта: </dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.ProductName</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.ProductName</dd>
                     <dt class="col-sm-6 text-right">Название организации</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.OrganizationName</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.OrganizationName</dd>
                     <dt class="col-sm-6 text-right">Цена за единицу (TJS)</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductPrice</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyProductPrice</dd>
                     <dt class="col-sm-6 text-right">Цена за единицу (USD)</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductPriceUSD</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyProductPriceUSD</dd>
                     <dt class="col-sm-6 text-right">Количество, шт</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductObem</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyProductObem</dd>
                     <dt class="col-sm-6 text-right">Общая сумма (TJS)</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductSumPrice</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyProductSumPrice</dd>
                     <dt class="col-sm-6 text-right">Общая сумма (USD)</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductSumPriceUSD</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyProductSumPriceUSD</dd>
                     <dt class="col-sm-6 text-right">Дата и время</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyProductDate</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyProductDate</dd>
                     <dt class="col-sm-6 text-right">Комментарий</dt>
-                    <dd class="col-sm-6 text-left">@Model.Response.BuyComment</dd>
+                    <dd class="col-sm-6 text-left">@Model.BuyProductResponse.BuyComment</dd>
                 </dl>
                 <form>
                     <!-- Скрытые поля для передачи модели -->
-                    <input type="hidden" asp-for="Response.Id" />
-                    <input type="hidden" asp-for="Response.ProductNameID" />
-                    <input type="hidden" asp-for="Response.BuyProductObem" />
+                    <input type="hidden" asp-for="BuyProductResponse.Id" />
+                    <input type="hidden" asp-for="BuyProductResponse.ProductNameID" />
+                    <input type="hidden" asp-for="BuyProductResponse.BuyProductObem" />
 
-                    <button type="submit" class="btn btn-danger" onclick='deleteItem(@Html.Raw(Json.Serialize(Model.Response)))'>Удалить</button>
+                    <button type="submit" class="btn btn-danger" onclick='deleteItem(@Html.Raw(Json.Serialize(Model.BuyProductResponse)))'>Удалить</button>
                     <a asp-action="Index" class="btn btn-secondary">Отмена</a>
                 </form>
             </div>

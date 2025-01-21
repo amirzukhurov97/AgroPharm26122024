@@ -62,7 +62,7 @@ namespace AgroPharm.Repositories
                 }
                 else
                 {
-                    return $"Внимание: Недостаточное количество товара на складе.\n Количество такого товара на складе = {res.ObemProducts}";
+                    return $"Внимание: Недостаточное количество товара на складе.\n Количество такого товара на складе = {res.ObemProducts}. Удалить невозможно!";
                 }
             }
             catch (Exception ex)

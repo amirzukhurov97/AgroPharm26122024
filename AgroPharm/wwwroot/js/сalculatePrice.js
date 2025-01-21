@@ -6,7 +6,7 @@
     const totalUSDInput = document.getElementById("sumUSD");
 
     // Установите курс валюты (пример: 1 USD = 11 TJS)
-    const exchangeRate = 11;
+    const exchangeRateInput = document.querySelector('input[name="_Currency"]').value;
 
     function calculateSum()
     {
@@ -14,11 +14,9 @@
         const priceTJS = parseFloat(priceTJSInput.value) || 0;
         const priceUSD = parseFloat(priceUSDInput.value) || 0;
         const BuyQuantity = parseFloat(quantity.value) || 0;
-
         // Рассчитать суммы
         const totalTJS = priceTJS * BuyQuantity;
         const totalUSD = priceUSD * BuyQuantity;
-
         // Отобразить результаты
         totalTJSInput.value = totalTJS.toFixed(2);
         totalUSDInput.value = totalUSD.toFixed(2);
@@ -26,6 +24,7 @@
     function tjstousd()
     {
         const priceTJS = parseFloat(priceTJSInput.value);
+        const exchangeRate = parseFloat(exchangeRateInput) || 0;
 
         const totalUSD = priceTJS / exchangeRate;
 
@@ -34,7 +33,7 @@
     function usdtotjs()
     {
         const priceUSD = parseFloat(priceUSDInput.value);
-
+        const exchangeRate = parseFloat(exchangeRateInput) || 0;
         const totalTJS = priceUSD * exchangeRate;
 
         priceTJSInput.value = totalTJS.toFixed(2);

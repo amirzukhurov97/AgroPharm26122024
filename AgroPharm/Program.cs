@@ -14,6 +14,7 @@ builder.Services.AddSingleton (pro=>new ReturnInRepo(builder.Configuration.GetCo
 builder.Services.AddSingleton(propa=>new ProductRepo(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSingleton(propa=>new CustomerRepo(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSingleton(propa=>new OrganizationRepo(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton(propa=>new CurrencyRepo(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 builder.Services.AddSingleton<AppDbContext>();

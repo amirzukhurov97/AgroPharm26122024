@@ -1,0 +1,44 @@
+﻿@model Currency
+
+<div class="page-content-wrapper">
+    <div class="page-content" style="min-height:1539px">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="card-head">
+                        <header>Обновление курса валют</header>
+                    </div>
+                    <div class="card-body" id="bar-parent">
+                        <form id="createProductForm" asp-controller="Currency" asp-action="Edit" method="post" class="form-horizontal">
+                            <div class="form-body">
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3">
+                                        Новый курс 1 USD =
+                                        <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="USDtoTJS" asp-for="USDtoTJS" autocomplete="off" placeholder="Обновлённый курс валют" class="form-control input-height" required>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="offset-md-5 col-md-7">
+                                            <button type="submit" class="btn btn-info">Добавить</button>
+                                            <a asp-controller="Currency" asp-action="Index" class="btn btn-default">Отмена</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/js/createResponse.js")"></script>
+
+

@@ -18,7 +18,7 @@
 										Наименование товара <span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<select class="form-control input-height" asp-for="Request.ProductNameID" asp-items="Model.Products" required>
+										<select class="form-control input-height" asp-for="BuyProductRequest.ProductNameID" asp-items="Model.Products" required>
 											<option value="Response.ProductName"></option>
 										</select>
 									</div>
@@ -28,7 +28,7 @@
 										Наименовании организации <span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<select class="form-control input-height" asp-for="Request.OrganizationNameID" asp-items="Model.Organizations" required>
+										<select class="form-control input-height" asp-for="BuyProductRequest.OrganizationNameID" asp-items="Model.Organizations" required>
 											<option value="Response."></option>
 										</select>
 									</div>
@@ -39,7 +39,7 @@
 										<span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<input type="number" id="priceTJS" asp-for="Request.BuyProductPrice" placeholder="Введите цену товара TJS" class="form-control input-height" step="0.01" min="0.01" required />
+										<input type="number" id="priceTJS" asp-for="BuyProductRequest.BuyProductPrice" placeholder="Введите цену товара TJS" class="form-control input-height" step="0.01" min="0.01" required />
 									</div>
 								</div>
 								<div class="form-group row">
@@ -48,7 +48,7 @@
 										<span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<input type="number" id="priceUSD" asp-for="Request.BuyProductPriceUSD" placeholder="Введите цену товара в USD" class="form-control input-height" step="0.01" min="0.01" required />
+										<input type="number" id="priceUSD" asp-for="BuyProductRequest.BuyProductPriceUSD" placeholder="Введите цену товара в USD" class="form-control input-height" step="0.01" min="0.01" required />
 									</div>
 								</div>
 								<div class="form-group row">
@@ -57,7 +57,7 @@
 										<span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<input type="number" id="quantity" asp-for="Request.BuyProductObem" placeholder="Введите количество" class="form-control input-height" min="1" required />
+										<input type="number" id="quantity" asp-for="BuyProductRequest.BuyProductObem" placeholder="Введите количество" class="form-control input-height" min="1" required />
 									</div>
 								</div>
 								<div class="form-group row">
@@ -66,7 +66,7 @@
 										<span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<input type="number" id="sumTJS" asp-for="Request.BuyProductSumPrice" placeholder="Сумма TJS" class="form-control input-height" readonly />
+										<input type="number" id="sumTJS" asp-for="BuyProductRequest.BuyProductSumPrice" placeholder="Сумма TJS" class="form-control input-height" readonly />
 									</div>
 								</div>
 								<div class="form-group row">
@@ -75,7 +75,7 @@
 										<span class="required"> * </span>
 									</label>
 									<div class="col-md-5">
-										<input type="number" id="sumUSD" asp-for="Request.BuyProductSumPriceUSD" placeholder="Сумма USD" class="form-control input-height" readonly />
+										<input type="number" id="sumUSD" asp-for="BuyProductRequest.BuyProductSumPriceUSD" placeholder="Сумма USD" class="form-control input-height" readonly />
 									</div>
 								</div>
 								<div class="form-group row">
@@ -83,12 +83,13 @@
 										Комментарий
 									</label>
 									<div class="col-md-5">
-										<textarea asp-for="Request.BuyComment" placeholder="Коментарий к товару" class="form-control-textarea" rows="5"></textarea>
+										<textarea asp-for="BuyProductRequest.BuyComment" placeholder="Коментарий к товару" class="form-control-textarea" rows="5"></textarea>
 									</div>
 								</div>								
 								<input type="hidden" asp-for="tempQuantity">
-								<input type="hidden" asp-for="Request.Id">	
+								<input type="hidden" asp-for="BuyProductRequest.Id">	
 								<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+								<input type="hidden" name="_Currency" value="@Model.CurrencyNow" />
 								<div class="form-actions">
 									<div class="row">
 										<div class="offset-md-3 col-md-9">

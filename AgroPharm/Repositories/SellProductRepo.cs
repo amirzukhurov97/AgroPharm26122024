@@ -77,5 +77,19 @@ namespace AgroPharm.Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public SellProductResponse GetSellProductTotal()
+        {
+            try
+            {
+                using var db = new MySqlConnection(_connectingString);
+                var sqlQuery = "SELECT SUM(sell.`SellProductSumPrice`) AS SellProductSumPrice, SUM(sell.`SellProductSumPriceUSD`) AS SellProductSumPriceUSD FROM sellproducts sell;";
+                SellProductResponse? sellProducts = db.QuerySingleOrDefault<SellProductResponse>(sqlQuery);
+                return sellProducts;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

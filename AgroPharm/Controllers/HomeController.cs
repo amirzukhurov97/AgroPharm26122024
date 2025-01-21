@@ -11,11 +11,19 @@ namespace AgroPharm.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly MarketRepository _market;
+        private readonly BuyProductRepo _buyProductRepo;
+        private readonly SellProductRepo _sellProductRepo;
+        private readonly ReturnInRepo _returnInRepo;
+        private readonly ReturnOutRepo _returnOutRepo;
 
-        public HomeController(ILogger<HomeController> logger, MarketRepository market)
+        public HomeController(ILogger<HomeController> logger, MarketRepository market, BuyProductRepo buyProductRepo, SellProductRepo sellProductRepo, ReturnInRepo returnInRepo, ReturnOutRepo returnOutRepo)
         {
             _logger = logger;
-            _market = market;   
+            _market = market;
+            _buyProductRepo = buyProductRepo;
+            _sellProductRepo = sellProductRepo;
+            _returnInRepo = returnInRepo;
+            _returnOutRepo = returnOutRepo;
         }
 
         //public async  Task<IActionResult> Index()
@@ -34,7 +42,7 @@ namespace AgroPharm.Controllers
         //        //return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
         //        return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
         //    }
-            
+
         //}
         public async Task<IActionResult> Index()
         {
@@ -54,11 +62,6 @@ namespace AgroPharm.Controllers
                 return Json(new { success = false, message = $"Произошла ошибка: {ex.Message}" });
             }
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
         public IActionResult PrintReport()
         {
             return View();
@@ -70,10 +73,23 @@ namespace AgroPharm.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Dashboard()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var buyProductTotal = _buyProductRepo.GetBuyProductTotal();
+            var sellProductTotal = _sellProductRepo.GetSellProductTotal();
+            var returnInTotal = _returnInRepo.GetReturnInTotal();
+            var returnOutTotal = _returnOutRepo.GetReturnOutTotal();
+
+            var model = new ViewModel()
+            {
+                BuyProductResponse = buyProductTotal,
+                SellResponse = sellProductTotal,
+                ReturnInResponse = returnInTotal,
+                ReturnOutResponse = returnOutTotal
+            };
+
+            return View(model);
         }
+
     }
 }
