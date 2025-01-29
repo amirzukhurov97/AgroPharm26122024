@@ -1,6 +1,4 @@
-﻿using AgroPharm.Interfaces;
-using AgroPharm.Models;
-using AgroPharm.Models.Response;
+﻿using AgroPharm.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
 

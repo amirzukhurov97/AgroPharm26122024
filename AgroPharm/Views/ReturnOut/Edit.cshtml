@@ -89,6 +89,7 @@
 								<input type="hidden" asp-for="tempQuantity">
 								<input type="hidden" asp-for="ReturnOutRequest.Id">
 								<input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+								<input type="hidden" name="_Currency" value="@Model.CurrencyNow" />
 								<div class="form-actions">
 									<div class="row">
 										<div class="offset-md-3 col-md-9">

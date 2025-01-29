@@ -176,8 +176,8 @@ class Dropdown {
       $(document.body).children().on('mouseover', null, $.noop)
     }
 
-    this._element.focus()
-    this._element.setAttribute('aria-expanded', true)
+      this._element.focus()
+      this._element.setAttribute('aria-expanded', true)
 
     $(this._menu).toggleClass(CLASS_NAME_SHOW)
     $(parent)
@@ -404,7 +404,7 @@ class Dropdown {
         $(document.body).children().off('mouseover', null, $.noop)
       }
 
-      toggles[i].setAttribute('aria-expanded', 'false')
+      toggles[i].setAttribute('aria-expanded', 'true')
 
       if (context._popper) {
         context._popper.destroy()

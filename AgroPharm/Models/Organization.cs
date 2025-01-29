@@ -2,6 +2,6 @@
 {
     public class Organization :EntityBase
     {
-        public string OrganizationName { get; set; }
+        public string? OrganizationName { get; set; }
     }
 }

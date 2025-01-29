@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AgroPharm.Models.Response.Market>
+﻿@using AgroPharm.Models.Market
+@model IEnumerable<Market>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -15,11 +16,6 @@
                                         <div class="card">
                                             <div class="card-head">
                                                 <header>Товары в наличии</header>
-                                                @* <div class="tools">
-                                                    <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-                                                    <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-                                                    <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
-                                                </div> *@
                                             </div>
                                             <div class="card-body ">
                                                 <div class="row">
@@ -31,7 +27,7 @@
                                                             </a>
                                                             <ul class="dropdown-menu pull-right">
                                                                 <li>
-                                                                    <a href="javascript:;">
+                                                                    <a asp-controller="Home" asp-action="GenerateProductPdf">
                                                                         <i class="fa fa-print"></i> Print
                                                                     </a>
                                                                 </li>
@@ -40,11 +36,6 @@
                                                                         <i class="fa fa-file-pdf-o"></i> Save as PDF
                                                                     </a>
                                                                 </li>
-                                                                @* <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="fa fa-file-excel-o"></i> Export to Excel
-                                                                    </a>
-                                                                </li> *@
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -83,4 +74,5 @@
         </div>
     </div>
 }
+
 @* <script src="@Url.Content("~/js/getItems.js")"></script> *@

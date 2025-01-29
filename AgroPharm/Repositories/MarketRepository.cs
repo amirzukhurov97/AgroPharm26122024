@@ -1,6 +1,5 @@
 ﻿using AgroPharm.Interfaces;
-using AgroPharm.Models.Request;
-using AgroPharm.Models.Response;
+using AgroPharm.Models.Market;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;

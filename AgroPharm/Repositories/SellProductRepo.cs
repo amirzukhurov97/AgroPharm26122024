@@ -1,6 +1,5 @@
 ﻿using AgroPharm.Interfaces;
-using AgroPharm.Models.Request;
-using AgroPharm.Models.Response;
+using AgroPharm.Models.Sell;
 using Dapper;
 using MySql.Data.MySqlClient;
 
@@ -77,13 +76,13 @@ namespace AgroPharm.Repositories
                 throw new Exception(ex.Message);
             }
         }
-        public SellProductResponse GetSellProductTotal()
+        public SellProductPrices GetSellProductTotal()
         {
             try
             {
                 using var db = new MySqlConnection(_connectingString);
                 var sqlQuery = "SELECT SUM(sell.`SellProductSumPrice`) AS SellProductSumPrice, SUM(sell.`SellProductSumPriceUSD`) AS SellProductSumPriceUSD FROM sellproducts sell;";
-                SellProductResponse? sellProducts = db.QuerySingleOrDefault<SellProductResponse>(sqlQuery);
+                SellProductPrices? sellProducts = db.QuerySingleOrDefault<SellProductPrices>(sqlQuery);
                 return sellProducts;
             }
             catch (Exception ex)
