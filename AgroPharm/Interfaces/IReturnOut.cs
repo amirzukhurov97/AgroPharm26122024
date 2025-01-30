@@ -1,4 +1,5 @@
-﻿using AgroPharm.Models.ReturnOut;
+﻿using AgroPharm.Models.Request;
+using AgroPharm.Models.Response;
 
 namespace AgroPharm.Interfaces
 {

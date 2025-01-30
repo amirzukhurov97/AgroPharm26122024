@@ -1,6 +1,8 @@
-﻿
+﻿using AgroPharm.Infrastructure;
 using AgroPharm.Interfaces;
 using AgroPharm.Models.Buy;
+using AgroPharm.Models.Request;
+using AgroPharm.Models.Response;
 using Dapper;
 using MySql.Data.MySqlClient;
 
@@ -80,13 +82,13 @@ namespace AgroPharm.Repositories
                 throw;
             }
         }
-        public BuyProductPrices GetBuyProductTotal()
+        public BuyProductResponse GetBuyProductTotal()
         {
             try
             {
                 using var db = new MySqlConnection(_connectingString);
                 var sqlQuery = "SELECT SUM(buy.`BuyProductSumPrice`) AS BuyProductSumPrice, SUM(buy.`BuyProductSumPriceUSD`) AS BuyProductSumPriceUSD FROM buyproducts buy;";
-                BuyProductPrices? buyProducts = db.QuerySingleOrDefault<BuyProductPrices>(sqlQuery);
+                BuyProductResponse? buyProducts = db.QuerySingleOrDefault<BuyProductResponse>(sqlQuery);
                 return buyProducts;
             }
             catch (Exception ex)
@@ -94,7 +96,5 @@ namespace AgroPharm.Repositories
                 throw;
             }
         }
-
-        
     }
 }

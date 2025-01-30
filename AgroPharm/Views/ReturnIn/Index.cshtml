@@ -1,5 +1,4 @@
-﻿@using AgroPharm.Models.ReturnIn
-@model IEnumerable<ReturnInResponse>
+﻿@model IEnumerable<AgroPharm.Models.Response.ReturnInResponse>
 
 @{
     int count = 1;
@@ -41,13 +40,18 @@
                                                         </a>
                                                         <ul class="dropdown-menu pull-right">
                                                             <li>
-                                                                <a asp-controller="ReturnIn" asp-action="Report">
+                                                                <a asp-controller="Home" asp-action="PrintReport">
                                                                     <i class="fa fa-print"></i> Print
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a asp-controller="Home" asp-action="PrintReport">
                                                                     <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;">
+                                                                    <i class="fa fa-file-excel-o"></i> Export to Excel
                                                                 </a>
                                                             </li>
                                                         </ul>

@@ -1,8 +1,15 @@
-﻿@model AgroPharm.Models.DashboardModel
+﻿@model AgroPharm.Models.ViewModel
 
 <!-- start page content -->
 <div class="page-content-wrapper">
-	<div class="page-content">		
+	<div class="page-content">
+		<div class="page-bar">
+			<div class="page-title-breadcrumb">
+				<div class=" pull-left">
+					<div class="page-title">Dashboard</div>
+				</div>
+			</div>
+		</div>
 		<!-- start widget -->
 		<div class="state-overview">
 			<div class="row">
@@ -10,9 +17,9 @@
 					<div class="info-box bg-b-green">
 						<span class="info-box-icon push-bottom"><i class="fa fa-shopping-cart"></i></span>
 						<div class="info-box-content">
-							<span class="info-box-text title-dashboard">Сумма закупок</span>
-							<span class="info-box-number">@Model.BuyProductPrices.BuyProductSumPrice TJS</span><br />
-							<span class="info-box-number">@Model.BuyProductPrices.BuyProductSumPriceUSD USD</span>							
+							<span class="info-box-text title-dashboard" >Сумма закупок</span>
+							<span class="info-box-number">@Model.BuyProductResponse.BuyProductSumPrice TJS</span><br />
+							<span class="info-box-number">@Model.BuyProductResponse.BuyProductSumPriceUSD USD</span>							
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -24,8 +31,8 @@
 						<span class="info-box-icon push-bottom"><i class="fa fa-shopping-cart"></i></span>
 						<div class="info-box-content">
 							<span class="info-box-text title-dashboard">Сумма продаж</span>
-							<span class="info-box-number">@Model.SellProductPrices.SellProductSumPrice TJS</span><br />
-							<span class="info-box-number">@Model.SellProductPrices.SellProductSumPriceUSD USD</span>
+							<span class="info-box-number">@Model.SellResponse.SellProductSumPrice TJS</span><br />
+							<span class="info-box-number">@Model.SellResponse.SellProductSumPriceUSD USD</span>							
 						</div>
 						<!-- /.info-box-content -->
 					</div>
@@ -37,8 +44,8 @@
 						<span class="info-box-icon push-bottom"><i class="fa fa-bank"></i></span>
 						<div class="info-box-content">
 							<span class="info-box-text title-dashboard">Сумма возврат организацию</span>
-							<span class="info-box-number">@Model.ReturnOutProductPrices.ReturnOutSumProductPrice TJS</span><br />
-							<span class="info-box-number">@Model.ReturnOutProductPrices.ReturnOutSumProductPriceUSD USD</span>
+							<span class="info-box-number">@Model.ReturnInResponse.ReturnInSumProductPrice TJS</span><br />
+							<span class="info-box-number">@Model.ReturnInResponse.ReturnInSumProductPriceUSD USD</span>
 							
 						</div>
 						<!-- /.info-box-content -->
@@ -51,8 +58,8 @@
 						<span class="info-box-icon push-bottom"><i class="material-icons">person</i></span>
 						<div class="info-box-content">
 							<span class="info-box-text title-dashboard">Сумма возврат от пукупателя</span>
-							<span class="info-box-number">@Model.ReturnInProductPrices.ReturnInSumProductPrice TJS</span><br />
-							<span class="info-box-number">@Model.ReturnInProductPrices.ReturnInSumProductPriceUSD USD</span>
+							<span class="info-box-number">@Model.ReturnOutResponse.ReturnOutSumProductPrice TJS</span><br />
+							<span class="info-box-number">@Model.ReturnOutResponse.ReturnOutSumProductPriceUSD USD</span>
 							
 						</div>
 						<!-- /.info-box-content -->
@@ -101,7 +108,7 @@
 			</div>
 		</div>
 		<!-- Chart end --><!-- chart start -->
-		@* <div class="row">
+		<div class="row">
 			<div class="col-sm-8">
 				<div class="card">
 					<div class="card-head">
@@ -211,6 +218,11 @@
 				</div>
 			</div>
 		</div>
-		<!-- Chart end --> *@
+		<!-- Chart end -->
 	</div>
 </div>
+
+<!-- chart js -->
+<script src="@Url.Content("~/assets/plugins/chart-js/Chart.bundle.js")"></script>
+<script src="@Url.Content("~/assets/plugins/chart-js/utils.js")"></script>
+<script src="@Url.Content("~/assets/js/pages/chart/chartjs/home-data.js")"></script>

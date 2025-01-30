@@ -1,5 +1,6 @@
 ﻿using AgroPharm.Interfaces;
-using AgroPharm.Models.ReturnIn;
+using AgroPharm.Models.Request;
+using AgroPharm.Models.Response;
 using Dapper;
 using MySql.Data.MySqlClient;
 
@@ -80,13 +81,13 @@ namespace AgroPharm.Repositories
             }
         }
 
-        public ReturnInProductPrices? GetReturnInTotal()
+        public ReturnInResponse GetReturnInTotal()
         {
             try
             {
                 using var db = new MySqlConnection(_connectingString);
                 var sqlQuery = "SELECT SUM(ret.`ReturnInSumProductPrice`) AS ReturnInSumProductPrice, SUM(ret.`ReturnInSumProductPriceUSD`) AS ReturnInSumProductPriceUSD FROM returncustomerproducts ret;";
-                ReturnInProductPrices? returnInProducts = db.QuerySingleOrDefault<ReturnInProductPrices>(sqlQuery);
+                ReturnInResponse? returnInProducts = db.QuerySingleOrDefault<ReturnInResponse>(sqlQuery);
                 return returnInProducts;
             }
             catch (Exception ex)

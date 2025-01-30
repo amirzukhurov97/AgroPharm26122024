@@ -1,5 +1,6 @@
 ﻿using AgroPharm.Interfaces;
-using AgroPharm.Models.ReturnOut;
+using AgroPharm.Models.Request;
+using AgroPharm.Models.Response;
 using Dapper;
 using MySql.Data.MySqlClient;
 
@@ -78,13 +79,13 @@ namespace AgroPharm.Repositories
             }
         }
 
-        public ReturnOutProductPrices GetReturnOutTotal()
+        public ReturnOutResponse GetReturnOutTotal()
         {
             try
             {
                 using var db = new MySqlConnection(_connectingString);
                 var sqlQuery = "SELECT SUM(ret.`ReturnOutSumProductPrice`) AS ReturnOutSumProductPrice, SUM(ret.`ReturnOutSumProductPriceUSD`) AS ReturnOutSumProductPriceUSD FROM returnorganizationproducts ret;";
-                ReturnOutProductPrices? returnOutProducts = db.QuerySingleOrDefault<ReturnOutProductPrices>(sqlQuery);
+                ReturnOutResponse? returnOutProducts = db.QuerySingleOrDefault<ReturnOutResponse>(sqlQuery);
                 return returnOutProducts;
             }
             catch (Exception ex)

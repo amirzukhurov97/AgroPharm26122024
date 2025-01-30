@@ -1,7 +1,6 @@
 ﻿using AgroPharm.Models.Buy;
-using AgroPharm.Models.ReturnIn;
-using AgroPharm.Models.ReturnOut;
-using AgroPharm.Models.Sell;
+using AgroPharm.Models.Request;
+using AgroPharm.Models.Response;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AgroPharm.Models
@@ -22,11 +21,7 @@ namespace AgroPharm.Models
         public ReturnInResponse? ReturnInResponse { get; set; }
         public IEnumerable<Currency>? Currency { get; set; }
         public decimal? CurrencyNow { get; set; }
-
-        public int? ProductNameID { get; set; }
-        public int? OrganizationNameID { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public BuyProductTotalPrice? BuyProductTotalPrice { get; set; }
 
     }
 

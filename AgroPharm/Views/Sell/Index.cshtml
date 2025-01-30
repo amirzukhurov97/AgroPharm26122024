@@ -1,5 +1,4 @@
-﻿@using AgroPharm.Models.Sell
-@model IEnumerable<SellProductResponse>
+﻿@model IEnumerable<AgroPharm.Models.Response.SellProductResponse>
 @{
     int count = 1;
     ViewData["Title"] = "SellProduct Page";
@@ -40,13 +39,18 @@
                                                         </a>
                                                         <ul class="dropdown-menu pull-right">
                                                             <li>
-                                                                <a asp-controller="Sell" asp-action="Report">
+                                                                <a asp-controller="Home" asp-action="PrintReport">
                                                                     <i class="fa fa-print"></i> Print
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a asp-controller="Home" asp-action="PrintReport">
                                                                     <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;">
+                                                                    <i class="fa fa-file-excel-o"></i> Export to Excel
                                                                 </a>
                                                             </li>
                                                         </ul>

@@ -27,12 +27,3 @@ body {
 .title-dashboard {
     font-size:22px
 }
-
-.nav-item.open > .nav-link {
-    background-color: #f1f1f1; /* ÷вет фона активного меню */
-    color: #333; /* ÷вет текста */
-}
-.nav-item .nav-link.active {
-    background-color: #d1e7fd; /* ÷вет активной ссылки */
-    color: #007bff; /* ÷вет текста */
-}

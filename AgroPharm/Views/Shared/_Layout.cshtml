@@ -20,9 +20,6 @@
     <link href="@Url.Content("~/assets/plugins/bootstrap/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/assets/plugins/summernote/summernote.css")" rel="stylesheet">
 	<link href="@Url.Content("~/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css")" rel="stylesheet" />
-    
-    <link href="@Url.Content("~/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
     <!-- Material Design Lite CSS -->
     <link rel="stylesheet" href="@Url.Content("~/assets/plugins/material/material.min.css")">
     <link rel="stylesheet" href="@Url.Content("~/assets/css/material_style.css")">
@@ -35,14 +32,15 @@
     <link href="@Url.Content("~/assets/css/responsive.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/assets/css/theme/light/theme-color.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/assets/css/pages/formlayout.css")" rel="stylesheet" type="text/css" />
+    
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	
+	<link href="@Url.Content("~/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css">
 	<link href="@Url.Content("~/lib/sweetalert2/dist/sweetalert2.css")" rel="stylesheet" type="text/css">
 
 	<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
-    <!-- Date Time item CSS -->
-    <link rel="stylesheet" href="@Url.Content("~/assets/plugins/material-datetimepicker/bootstrap-material-datetimepicker.css")"/>
-    <link href="@Url.Content("~/assets/plugins/material-datetimepicker/bootstrap-material-datetimepicker.css")" rel="stylesheet" />
+
+	
+
 </head>
 <br />
 <br />
@@ -55,7 +53,6 @@
 					<!-- logo start -->
 					<div class="page-logo">
                         <a asp-controller="Home" asp-action="Index">
-                            <span class="logo-icon fa fa-tree"></span>
 							<span class="logo-default">AgroPharm</span>
 						</a>
 					</div>
@@ -94,7 +91,7 @@
                     <div id="remove-scroll">
                         <ul class="sidemenu page-header-fixed"
                             data-keep-expanded="false"
-                            data-auto-scroll="false"
+                            data-auto-scroll="true"
                             data-slide-speed="200"
                             style="padding-top: 20px;">
                             <li class="sidebar-toggler-wrapper hide">
@@ -148,7 +145,7 @@
                                     <span class="title">Продажа</span><span class="arrow"></span>
                                 </a>
                             </li>
-                            <li class="nav-item" >
+                            <li class="nav-item">
                                 <a href="#" class="nav-link nav-toggle">
                                     <i class="fa fa-reply"></i>
                                     <span class="title">Возврат</span><span class="arrow"></span>
@@ -199,19 +196,13 @@
 	<script src="@Url.Content("~/assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js")"></script>
 	<script src="@Url.Content("~/assets/plugins/sparkline/jquery.sparkline.js")"></script>
 	<script src="@Url.Content("~/assets/js/pages/sparkline/sparkline-data.js")"></script>
-    <script src="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js")"></script>
-    <script src="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker-init.js")"></script>
     <!-- Common j-->
 	<script src="@Url.Content("~/assets/js/app.js")"></script>
 	<script src="@Url.Content("~/assets/js/layout.js")"></script>
 	<script src="@Url.Content("~/assets/js/theme-color.js")"></script>
     <!-- material-->
 	<script src="@Url.Content("~/assets/plugins/material/material.min.js")"></script>
-    <script src="@Url.Content("~/assets/js/pages/material-select/getmdl-select.js")"></script>
-    <script src="@Url.Content("~/assets/plugins/material-datetimepicker/moment-with-locales.min.js")"></script>
-    <script src="@Url.Content("~/assets/plugins/material-datetimepicker/bootstrap-material-datetimepicker.js")"></script>
-    <script src="@Url.Content("~/assets/plugins/material-datetimepicker/datetimepicker.js")"></script>
-
+    
     <!-- summerno-->
     <script src="@Url.Content("~/assets/plugins/summernote/summernote.js")"></script>
     <script src="@Url.Content("~/assets/js/pages/summernote/summernote-data.js")"></script>
@@ -223,7 +214,12 @@
 	<script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
 	<script src="@Url.Content("~/lib/sweetalert2/dist/sweetalert2.js")"></script>
 
-    <script src="@Url.Content("~/assets/js/pages/extra-pages/pages.js")"></script>   
+	<script src="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js")" charset="UTF-8"></script>
+	<script src="@Url.Content("~/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker-init.js")" charset="UTF-8"></script>
+
+    <script src="@Url.Content("~/assets/js/pages/extra-pages/pages.js")"></script>
+
+    
 	
 	<script>
 			if (document.getElementById) onload = function () {
